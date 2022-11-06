@@ -1,0 +1,1 @@
+Pasta aonde estão guardadas as pistas
