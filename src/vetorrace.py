@@ -7,17 +7,13 @@
 #Velocidade
 #v = (vx,vy)
 #
-#
 #p = p + v + a
 #v = v + a
-#
 #
 #sair da pista -> custo 25
 #    • v = (0,0)
 #
 #movimento -> custo 1
-#
-#parser de ficheiro -> pista
 from grafo import Grafo
 from grafo import Node
 from queue import Queue
@@ -34,8 +30,6 @@ def pista(path:str):
         aux = []
         aux[:0] = linha
         pista.append(aux)
-    #ys = len(pista)
-    #xs = len(pista[0])
     return pista
 
 
@@ -70,24 +64,75 @@ def vizinhos(pista,coord):
             l.append((xs,ys))
     return l
 
+def getChar(pista, coord):
+    x,y = coord
+    return pista[y][x]
 
-#por faver ainda
-#def geraGrafo(pista):
+def pista2tuple(pista):
+    for i in range(len(pista)):
+        pista[i] = tuple(pista[i])
+    return tuple(pista)
+
+def tuple2pista(pista):
+    pista = list(pista)
+    for i in range(len(pista)):
+        pista[i] = list(pista[i])
+    return pista
+
+def geraEstados(pista):
+    #só há uma posição de início
+    l = getPosition(pista,'P')
+    if (l == []):
+        return []
+    x,y = l[0]
+     
+    v = vizinhos(pista,(x,y))
+
+    pista[y][x] = '-'
+
+    l = []
+    for xs,ys in v:
+        k = getChar(p,(xs,ys))
+        if k != 'X' and k != 'F':
+            pista[ys][xs] = 'P'
+            l.append(pista)
+            pista[ys][xs] = '-'
+
+    return l
+
+
+def geraGrafo(pista):
     # grafo é direcionado
-    #g = Grafo(True)
-    #i = pista
-    #v = set() #visited
-    #q = Queue()
+    g = Grafo(True)
+    i = pista
+    v = set() #visited
+    q = Queue()
 
-    #q.put(i)
-    #while not q.empty():
-    #    #estado
-    #    e = q.get()
-    #    for estado in geraEstados(e):
-    #        g.add_edge(e, estado)
+    q.put(i)
+    while not q.empty():
+        #estado
+        e = q.get()
+        for estado in geraEstados(tuple2pista(e)):
+                
+            g.add_edge(pista2tuple(e), pista2tuple(estado)) 
 
-    #        if (estado not in v ):
-    #            q.put(estado)
-    #    v.add(e)
+            if (pista2tuple(estado) not in v ):
+                q.put(estado)
+        v.add(pista2tuple(e))
+    return g
 
-    #return g
+
+
+
+
+p = pista("../pistas/pista.txt")
+
+g = geraGrafo(p)
+
+end = 
+
+print("BFS")
+print(g.procuraBFS(p,end))
+
+print("DFS")
+print(g.procuraDFS(p,end))

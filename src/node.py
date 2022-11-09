@@ -7,7 +7,7 @@ class Node:
         return str(self.name)
 
     def __hash__(self):
-        return hash(self.name)
+        return hash(str(self.name))
 
     def __eq__(self,other):
         return (self.name == other.name)

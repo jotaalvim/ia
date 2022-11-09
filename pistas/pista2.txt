@@ -33,9 +33,9 @@ XXXXX----------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX---------X
 XXXXXX----------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX----------X
 XXXXXXX----------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX----------XX
 XXXXXXXX-----------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX----------XXX
-XXXXXXXXX--------------------------------FXP------------------------XXXX
-XXXXXXXXXX-------------------------------FXP-----------------------XXXXX
+XXXXXXXXX--------------------------------FX-------------------------XXXX
+XXXXXXXXXX-------------------------------FX------------------------XXXXX
 XXXXXXXXXXX------------------------------FXP----------------------XXXXXX
-XXXXXXXXXXXX-----------------------------FXP---------------------XXXXXXX
-XXXXXXXXXXXXX----------------------------FXP--------------------XXXXXXXX
+XXXXXXXXXXXX-----------------------------FX----------------------XXXXXXX
+XXXXXXXXXXXXX----------------------------FX---------------------XXXXXXXX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
