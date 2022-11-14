@@ -15,10 +15,12 @@
 #
 #movimento -> custo 1
 from grafo import Grafo
-from grafo import Node
+from node import Node
 from queue import Queue
 
-# type Pista = [[Char]]
+# type Pista = ((Char,Char, ...))
+
+#devolve uma lista de listas
 def pista(path:str):
     pista = []
     f = open(path, "r")
@@ -33,6 +35,7 @@ def pista(path:str):
     return pista
 
 
+
 # devolde as posições de um carater na pista
 def getPosition(pista,char):
     pos = []
@@ -42,6 +45,19 @@ def getPosition(pista,char):
                 pos.append((x,y))
     return pos
 
+def geraEstadoFinal(pista):
+    pos = getPosition (pista,"F")
+    xi,yi = getPosition (pista,"P")[0]
+    pista[yi][xi] = "-"
+    l = []
+    for x,y in pos:
+        pista[y][x] = "P"
+
+        pt = pista2tuple(pista)
+        l.append(pt)
+        pista = tuple2pista(pista)
+        pista[y][x] = "-"
+    return l
 
 def vizinhos(pista,coord):
     x,y = coord
@@ -71,7 +87,7 @@ def getChar(pista, coord):
 def pista2tuple(pista):
     for i in range(len(pista)):
         pista[i] = tuple(pista[i])
-    return tuple(pista)
+    return (tuple(pista))
 
 def tuple2pista(pista):
     pista = list(pista)
@@ -79,6 +95,7 @@ def tuple2pista(pista):
         pista[i] = list(pista[i])
     return pista
 
+#[[Char]]-> [[Char]]
 def geraEstados(pista):
     #só há uma posição de início
     l = getPosition(pista,'P')
@@ -92,7 +109,7 @@ def geraEstados(pista):
 
     l = []
     for xs,ys in v:
-        k = getChar(p,(xs,ys))
+        k = p[ys][xs]
         if k != 'X' and k != 'F':
             pista[ys][xs] = 'P'
             l.append(pista)
@@ -112,27 +129,27 @@ def geraGrafo(pista):
     while not q.empty():
         #estado
         e = q.get()
-        for estado in geraEstados(tuple2pista(e)):
-                
-            g.add_edge(pista2tuple(e), pista2tuple(estado)) 
+        te = pista2tuple(e)
+        e = tuple2pista(te)
 
-            if (pista2tuple(estado) not in v ):
+        print(geraEstados(e))
+        for estado in geraEstados(tuple2pista(e)):
+            t = pista2tuple(estado)
+            g.add_edge(te ,t) 
+
+            if (t not in v ):
                 q.put(estado)
-        v.add(pista2tuple(e))
+        v.add(te)
     return g
 
-
-
-
-
 p = pista("../pistas/pista.txt")
+end = geraEstadoFinal(p)
 
 g = geraGrafo(p)
 
-end = 
-
 print("BFS")
-print(g.procuraBFS(p,end))
+print(g.procuraBFS(pista2tuple(p),end))
 
 print("DFS")
-print(g.procuraDFS(p,end))
+print(g.procuraDFS(pista2tuple(p),end))
+

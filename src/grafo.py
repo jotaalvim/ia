@@ -62,7 +62,7 @@ class Grafo:
         path.append(start)
         visited.add(start)
         
-        if start == end:
+        if start in end:
             custoT = self.calculaCusto(path)
             return (path,custoT)
 
@@ -84,7 +84,7 @@ class Grafo:
         visited.add(start)
         #nodo atual
         u = start
-        while not q.empty() and u != end:
+        while not q.empty() and (u not in end):
             u = q.get()  
             for no,peso in self.dic[u]:
                 if no not in visited:
@@ -93,11 +93,11 @@ class Grafo:
                     q.put(no)
         #recontruir caminho
         path = []
-        if u == end:
-            while pais[end] != None:
-                path.append(end)
-                end = pais[end]
-            path.append(end)
+        if u in end:
+            while pais[u] != None:
+                path.append(u)
+                u = pais[u]
+            path.append(u)
 
         path.reverse()
 
