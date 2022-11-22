@@ -8,7 +8,7 @@ def mostra_pistas():
 def menu():
     print("[1] - Escolher a pista")
     print("[0] - Sair")
-    
+
 def main():
     menu()
     option =  int(input("Escolha uma opereção: "))
@@ -22,16 +22,16 @@ def main():
                 print(ans)
             elif ans == 3:
                 print(ans)
-                
+
             else:
                 print("Escolha inválida")
                 break
         else:
             print("Entrada inválda")
-            
-    
+
+
     print("A sair...")
-    
-    
+
+
 if __name__ == "__main__":
     main()

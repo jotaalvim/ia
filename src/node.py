@@ -1,22 +1,31 @@
 class Node:
-    def __init__(self,name,id=-1):
+    def __init__(self,carro,mapa,id=-1):
         self.id = id
-        self.name = name
+        self.carro = carro
+        self.mapa = None
 
     def __str__(self):
-        return str(self.name)
+        #FIXME pode ter o mapa também
+        return str(self.carro)
 
     def __hash__(self):
-        return hash(str(self.name))
+        return hash(str(self.id))
 
     def __eq__(self,other):
-        return (self.name == other.name)
+        #FIXME comparar carro e o mapa?
+        return (self.id == other.id)
 
     def getId(self):
         return self.id
 
-    def getName(self):
-        return self.name
+    def getCarro(self):
+        return self.carro
+    
+    def getMapa(self):
+        return self.mapa
 
-    def setIf(self,id):
+    def setMapa(self,m):
+        self.mapa = m
+
+    def setId(self,id):
         self.id = id
