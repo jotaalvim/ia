@@ -20,9 +20,8 @@ def pista(path:str):
         aux = []
         aux[:0] = linha
         pista.append(aux)
+    f.close()
     return pista
-
-
 
 # devolde as posições de um carater na pista
 def getPosition(pista,char):
@@ -35,41 +34,49 @@ def getPosition(pista,char):
 
 
 #gera o fim, o carro em cima da meta
-def geraEstadoFinal(pista):
-    pos = getPosition (pista,"F")
-    xi,yi = getPosition (pista,"P")[0]
-    pista[yi][xi] = "-"
-    l = []
-    for x,y in pos:
-        pista[y][x] = "P"
-        l.append(pista)
-        pista[y][x] = "-"
-    return l
+#def geraEstadoFinal(pista):
+#    pos = getPosition (pista,"F")
+#    xi,yi = getPosition (pista,"P")[0]
+#    pista[yi][xi] = "-"
+#    l = []
+#    for x,y in pos:
+#        pista[y][x] = "P"
+#        l.append(pista)
+#        pista[y][x] = "-"
+#    return l
 
 
 #todas as acelarações possíveis
 def acel():
     return [(-1,-1),(-1,0),(-1,1),(0,-1),(0,0),(0,1),(1,-1),(1,0),(1,1)]
 
-#FIXME INUTIL
-def vizinhos(pista,coord):
-    x,y = coord
-    (x2,y2) = x+1,y
-    (x3,y3) = x  ,y+1
-    (x4,y4) = x+1,y+1
-    (x5,y5) = x-1,y
-    (x6,y6) = x  ,y-1
-    (x7,y7) = x-1,y-1
-    (x8,y8) = x-1,y+1
-    (x9,y9) = x+1,y-1
+#próximas posiçoes possiveis para um carro! 
+#devolve uma lista de novos carros
+def nextestado(pista,carro):
     l = []
 
-    for xs,ys in [
-            (x2,y2),(x3,y3),(x4,y4),(x5,y5),(x6,y6),(x7,y7),(x8,y8),(x9,y9)]:
-        if xs < 0 or ys < 0 or xs > len(pista[0]) or ys > len(pista):
-            a = 2
-        else:
-            l.append((xs,ys))
+    posi = carro.pos
+    veli = carro.vel
+
+    largura = len(pista[0]) 
+    altura  = len(pista)
+
+    for acele in acel():
+        novoCarro = Carro(posi,veli)
+        novoCarro.nextPosicao(acele)
+
+        x,y = novoCarro.pos
+        
+        if not (x < 0 or y < 0 or x > largura or y > altura):
+            print(x,y)
+            if (pista [y][x] == 'X'):
+                novoCarro.setPos(posi)
+                novoCarro.setVel((0,0))
+                if not (novoCarro in l):
+                    l.append(novoCarro)
+            else:
+                l.append(novoCarro)
+
     return l
 
 def getChar(pista, coord):
@@ -88,64 +95,60 @@ def getChar(pista, coord):
 #    return pista
 
 #[[Char]]-> [[Char]]
-def geraEstados(pista):
-    #só há uma posição de início
-    l = getPosition(pista,'P')
-    if (l == []):
-        return []
-    x,y = l[0]
-     
-    v = vizinhos(pista,(x,y))
 
-    pista[y][x] = '-'
+#def geraEstados(pista):
+#    #só há uma posição de início
+#    l = getPosition(pista,'P')
+#    if (l == []):
+#        return []
+#    x,y = l[0]
+#     
+#    v = vizinhos(pista,(x,y))
+#
+#    pista[y][x] = '-'
+#
+#    l = []
+#    for xs,ys in v:
+#        k = p[ys][xs]
+#        if k != 'X' and k != 'F':
+#            pista[ys][xs] = 'P'
+#            l.append(pista)
+#            pista[ys][xs] = '-'
+#
+#    return l
 
-    l = []
-    for xs,ys in v:
-        k = p[ys][xs]
-        if k != 'X' and k != 'F':
-            pista[ys][xs] = 'P'
-            l.append(pista)
-            pista[ys][xs] = '-'
 
-    return l
-
-
-def geraGrafo(pista):
+def geraGrafo(pista,carro):
     # grafo é direcionado
     g = Grafo(True)
-    i = pista
+    i = carro
     v = set() #visited
     q = Queue()
 
     q.put(i)
+
     while not q.empty():
         #estado
         e = q.get()
-        #te = pista2tuple(e)
-        #e = tuple2pista(te)
-        print(geraEstados(e))
-        #for estado in geraEstados(tuple2pista(e)):
-        for estado in geraEstados(e):
-            #t = pista2tuple(estado)
-            #g.add_edge(te ,t) 
-            g.add_edge(e ,estado) 
 
-            if (e not in v ):
-                q.put(estado)
+        for car in nextestados(pista,e):
+            g.add_edge(e ,car) 
+
+            if (car not in v ):
+                q.put(car)
         v.add(e)
     return g
 
 p = pista("../pistas/pista.txt")
-c = Carro(0, getPosition (pista,"P")[0])
-n = Node(c,p,0)
+c = Carro(getPosition(p,"P")[0])
 
-end = geraEstadoFinal(p)
+g = geraGrafo(p,c)
 
-g = geraGrafo(p)
+end = getPosition (pista,"F")
 
-print("BFS")
-print(g.procuraBFS(p,end))
-
-print("DFS")
-print(g.procuraDFS(p,end))
-
+#print("BFS")
+#print(g.procuraBFS(p,end))
+#
+#print("DFS")
+#print(g.procuraDFS(p,end))
+#
