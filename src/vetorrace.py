@@ -26,8 +26,11 @@ def pista(path:str):
 # devolde as posições de um carater na pista
 def getPosition(pista,char):
     pos = []
-    for y in range(len(pista)):
-        for x in range(len(pista[0])):
+    largura = len(pista[0]) -1
+    altura  = len(pista) -1
+
+    for x in range(largura):
+        for y in range(altura):
             if pista[y][x] == char:
                 pos.append((x,y))
     return pos
@@ -58,8 +61,8 @@ def nextestado(pista,carro):
     posi = carro.pos
     veli = carro.vel
 
-    largura = len(pista[0]) 
-    altura  = len(pista)
+    largura = len(pista[0]) -1
+    altura  = len(pista) -1
 
     for acele in acel():
         novoCarro = Carro(posi,veli)
@@ -67,9 +70,8 @@ def nextestado(pista,carro):
 
         x,y = novoCarro.pos
         
-        if not (x < 0 or y < 0 or x > largura or y > altura):
-            print(x,y)
-            if (pista [y][x] == 'X'):
+        if not (x < 0 or x > largura or y < 0 or y > altura):
+            if ( getChar(pista,(x,y)) == 'X'):
                 novoCarro.setPos(posi)
                 novoCarro.setVel((0,0))
                 if not (novoCarro in l):
@@ -121,17 +123,16 @@ def getChar(pista, coord):
 def geraGrafo(pista,carro):
     # grafo é direcionado
     g = Grafo(True)
-    i = carro
     v = set() #visited
     q = Queue()
 
-    q.put(i)
+    q.put(carro)
 
     while not q.empty():
         #estado
         e = q.get()
 
-        for car in nextestados(pista,e):
+        for car in nextestado(pista,e):
             g.add_edge(e ,car) 
 
             if (car not in v ):
@@ -140,15 +141,18 @@ def geraGrafo(pista,carro):
     return g
 
 p = pista("../pistas/pista.txt")
-c = Carro(getPosition(p,"P")[0])
+
+start = getPosition (p,"P") [0]
+c = Carro(start)
+
+end = getPosition (p,"F")
 
 g = geraGrafo(p,c)
 
-end = getPosition (pista,"F")
 
-#print("BFS")
-#print(g.procuraBFS(p,end))
-#
-#print("DFS")
-#print(g.procuraDFS(p,end))
-#
+print("BFS")
+print(g.procuraBFS(p,end))
+
+print("DFS")
+print(g.procuraDFS(p,end))
+
