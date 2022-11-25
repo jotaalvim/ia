@@ -7,19 +7,13 @@ class Node:
         return str(self.carro)
 
     def __hash__(self):
-        return hash(str(self.id))
+        return hash(self.carro)
 
     def __eq__(self,other):
-        return (self.id == other.id)
+        return (self.carro == other.carro)
 
     def getId(self):
         return self.id
-
-    def getMapa(self):
-        return self.mapa
-
-    def setMapa(self,m):
-        self.mapa = m
 
     def setId(self,id):
         self.id = id
