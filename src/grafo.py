@@ -85,6 +85,7 @@ class Grafo:
         u = start
         while not q.empty() and (u not in end):
             u = q.get()  
+            #print(str(u))
             for no,peso in self.dic[u]:
                 if no not in visited:
                     visited.add(no)

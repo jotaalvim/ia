@@ -7,7 +7,6 @@ from node import Node
 from queue import Queue
 from carro import Carro
 
-
 #devolve uma lista de listas
 def pista(path:str):
     pista = []
@@ -26,28 +25,14 @@ def pista(path:str):
 # devolde as posições de um carater na pista
 def getPosition(pista,char):
     pos = []
-    largura = len(pista[0]) -1
-    altura  = len(pista) -1
+    largura = len(pista[0])
+    altura  = len(pista)
 
     for x in range(largura):
         for y in range(altura):
             if pista[y][x] == char:
                 pos.append((x,y))
     return pos
-
-
-#gera o fim, o carro em cima da meta
-#def geraEstadoFinal(pista):
-#    pos = getPosition (pista,"F")
-#    xi,yi = getPosition (pista,"P")[0]
-#    pista[yi][xi] = "-"
-#    l = []
-#    for x,y in pos:
-#        pista[y][x] = "P"
-#        l.append(pista)
-#        pista[y][x] = "-"
-#    return l
-
 
 #todas as acelarações possíveis
 def acel():
@@ -85,40 +70,6 @@ def getChar(pista, coord):
     x,y = coord
     return pista[y][x]
 
-#def pista2tuple(pista):
-#    for i in range(len(pista)):
-#        pista[i] = tuple(pista[i])
-#    return (tuple(pista))
-#
-#def tuple2pista(pista):
-#    pista = list(pista)
-#    for i in range(len(pista)):
-#        pista[i] = list(pista[i])
-#    return pista
-
-#[[Char]]-> [[Char]]
-
-#def geraEstados(pista):
-#    #só há uma posição de início
-#    l = getPosition(pista,'P')
-#    if (l == []):
-#        return []
-#    x,y = l[0]
-#     
-#    v = vizinhos(pista,(x,y))
-#
-#    pista[y][x] = '-'
-#
-#    l = []
-#    for xs,ys in v:
-#        k = p[ys][xs]
-#        if k != 'X' and k != 'F':
-#            pista[ys][xs] = 'P'
-#            l.append(pista)
-#            pista[ys][xs] = '-'
-#
-#    return l
-
 
 def geraGrafo(pista,carro):
     # grafo é direcionado
@@ -140,19 +91,27 @@ def geraGrafo(pista,carro):
         v.add(e)
     return g
 
-p = pista("../pistas/pista.txt")
+
+def endcarro(end):
+    l = []
+    for pos in end:
+        novoCarro = Carro(pos)
+        l.append(novoCarro)
+    return l
+
+
+p = pista("../pistas/pista3.txt")
 
 start = getPosition (p,"P") [0]
 c = Carro(start)
 
-end = getPosition (p,"F")
+end = endcarro(getPosition (p,"F"))
 
 g = geraGrafo(p,c)
-
+print(len(g.dic))
 
 print("BFS")
-print(g.procuraBFS(p,end))
+print(g.procuraBFS(c,end))
 
 print("DFS")
-print(g.procuraDFS(p,end))
-
+print(g.procuraDFS(c,end))
