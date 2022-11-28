@@ -85,12 +85,13 @@ class Grafo:
         u = start
         while not q.empty() and (not (u.pos in end)):
             u = q.get()  
-            print((str(u)))
-            for no,peso in self.dic[u]:
-                if no not in visited:
-                    visited.add(no)
-                    pais[no] = u
-                    q.put(no)
+            #print((str(u)))
+            if u in self.dic:
+                for no,peso in self.dic[u]:
+                    if no not in visited:
+                        visited.add(no)
+                        pais[no] = u
+                        q.put(no)
         #recontruir caminho
         path = []
         if u.pos in end:

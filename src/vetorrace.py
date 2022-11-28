@@ -60,7 +60,9 @@ def nextestado(pista,carro):
         x,y = novoCarro.pos
         
         if not (x < 0 or x > largura or y < 0 or y > altura):
-            if ( getChar(pista,(x,y)) == 'X'):
+
+
+            if (getChar(pista,(x,y)) == 'X'):
                 novoCarro.setPos(posi)
                 novoCarro.setVel((0,0))
                 if not (novoCarro in l):
@@ -105,7 +107,7 @@ def endcarro(end):
     return l
 
 
-p = pista("../pistas/pista4.txt")
+p = pista("../pistas/pista.txt")
 
 start = charPosition (p,"P") [0]
 c = Carro(start)
