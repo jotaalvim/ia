@@ -23,7 +23,7 @@ def pista(path:str):
     return pista
 
 # devolde as posições de um carater na pista
-def getPosition(pista,char):
+def charPosition(pista,char):
     pos = []
     largura = len(pista[0])
     altura  = len(pista)
@@ -107,17 +107,17 @@ def endcarro(end):
 
 p = pista("../pistas/pista4.txt")
 
-start = getPosition (p,"P") [0]
+start = charPosition (p,"P") [0]
 c = Carro(start)
 
-#end = endcarro(getPosition (p,"F"))
+#end = endcarro(charPosition (p,"F"))
 #VARIAVEL GLOBAL NÂO MEXER
-end = getPosition (p,"F")
+end = charPosition (p,"F")
 
 g = geraGrafo(p,c)
 
-novoCarro = Carro((17,1),(5,0))
-print(len(g.dic))
+#novoCarro = Carro((17,1),(5,0))
+#print(len(g.dic))
 
 print("BFS")
 
