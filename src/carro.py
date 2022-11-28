@@ -35,7 +35,10 @@ class Carro:
         self.vel = veln
     
     def __eq__(self, other):
-        return ( self.pos == other.pos and self.vel == other.vel)
+        if other == None:
+            return False 
+        else:
+            return self.pos == other.pos and self.vel == other.vel
 
     def __hash__(self):
         return hash(self.pos + self. vel)

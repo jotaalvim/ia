@@ -83,9 +83,9 @@ class Grafo:
         visited.add(start)
         #nodo atual
         u = start
-        while not q.empty() and (u not in end):
+        while not q.empty() and (not (u.pos in end)):
             u = q.get()  
-            #print(str(u))
+            #print((str(u)))
             for no,peso in self.dic[u]:
                 if no not in visited:
                     visited.add(no)
@@ -93,7 +93,7 @@ class Grafo:
                     q.put(no)
         #recontruir caminho
         path = []
-        if u in end:
+        if u.pos in end:
             while pais[u] != None:
                 path.append(u)
                 u = pais[u]

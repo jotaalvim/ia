@@ -49,6 +49,10 @@ def nextestado(pista,carro):
     largura = len(pista[0]) -1
     altura  = len(pista) -1
 
+    #end variavel global
+    if (posi in end):
+        l.append(carro)
+
     for acele in acel():
         novoCarro = Carro(posi,veli)
         novoCarro.nextPosicao(acele)
@@ -84,11 +88,12 @@ def geraGrafo(pista,carro):
         e = q.get()
 
         for car in nextestado(pista,e):
-            g.add_edge(e ,car) 
+            g.add_edge(e ,car,1) 
 
             if (car not in v ):
                 q.put(car)
         v.add(e)
+
     return g
 
 
@@ -100,18 +105,25 @@ def endcarro(end):
     return l
 
 
-p = pista("../pistas/pista3.txt")
+p = pista("../pistas/pista4.txt")
 
 start = getPosition (p,"P") [0]
 c = Carro(start)
 
-end = endcarro(getPosition (p,"F"))
+#end = endcarro(getPosition (p,"F"))
+#VARIAVEL GLOBAL NÂO MEXER
+end = getPosition (p,"F")
 
 g = geraGrafo(p,c)
+
+novoCarro = Carro((17,1),(5,0))
 print(len(g.dic))
 
 print("BFS")
-print(g.procuraBFS(c,end))
 
-print("DFS")
-print(g.procuraDFS(c,end))
+solve,w = g.procuraBFS(c,end)
+[print(str(u)) for u in solve]
+print("custo =",w)
+
+#print("DFS")
+#print(g.procuraDFS(c,end))
