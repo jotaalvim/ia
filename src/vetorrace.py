@@ -60,9 +60,9 @@ def nextestado(pista,carro):
         x,y = novoCarro.pos
         
         if not (x < 0 or x > largura or y < 0 or y > altura):
+            f = temParede(carro,novoCarro)
 
-
-            if (getChar(pista,(x,y)) == 'X'):
+            if (getChar(pista,(x,y)) == 'X') or f == True:
                 novoCarro.setPos(posi)
                 novoCarro.setVel((0,0))
                 if not (novoCarro in l):
@@ -107,36 +107,56 @@ def endcarro(end):
     return l
 
 def getDeclive(CarroEstadoAtual, CarroEstadoSeguinte):
-    x_CarroAtual = CarroEstadoAtual.getPos()[0]
-    y_CarroAtual = CarroEstadoAtual.getPos()[1]
-    
-    x_CarroSeguinte = CarroEstadoAtual.getPos()[0]
-    y_CarroSeguinte = CarroEstadoSeguinte.getPos()[1]
 
+    x_CarroAtual, y_CarroAtual = CarroEstadoAtual.getPos()
+    x_CarroSeguinte, y_CarroSeguinte = CarroEstadoSeguinte.getPos()
+    
+    if (x_CarroSeguinte - x_CarroAtual) == 0:
+        return 0
     declive = (y_CarroSeguinte - y_CarroAtual) / (x_CarroSeguinte - x_CarroAtual)
     
     return declive
     
 def getOrdenadaOrigem(CarroEstadoAtual, declive):
-    x_CarroAtual = CarroEstadoAtual.getPos()[0]
-    y_CarroAtual = CarroEstadoAtual.getPos()[1]
-    
+    x_CarroAtual,y_CarroAtual = CarroEstadoAtual.getPos()
     
     ordenadaOrigem = y_CarroAtual-declive*x_CarroAtual
     
     return ordenadaOrigem
     
-def verifica_parede_no_meio(lista_de_paredes, declive, ordenadaOrigem):
+def verifica_parede_no_meio(lista_de_paredes, declive, ordenadaOrigem,carro1,carro2):
     tem_parede = False # se devolver falso, é porque nao tem parede no meio
-    for coordenadas in lista_de_paredes:
-        if coordenadas[1] == int(declive*coordenadas[0] + ordenadaOrigem):
-            tem_parede = True
-            return tem_parede
+    for coordx,coordy in lista_de_paredes:
+        cx,cy   = carro1.getPos()
+        cx2,cy2 = carro2.getPos()
+
+
+        if ((cx > cx2 and coodrx > cx2 and coordx < cx) or (cx2 > cx and coodrx > cx  and coordx < cx2)) and ((cy > cy2 and coodry > cy2 and coordy < cy) or (if cy2 > cy and coodry > cy  and coordy < cy2)):
+            if coordy == int(declive*coordx + ordenadaOrigem):
+                tem_parede = True
+
+                print("o = ",ordenadaOrigem)
+                print("d = ",declive)
+                print("f = ",tem_parede)
+                return tem_parede
+
+
+def temParede (carro,novoCarro):
+    #declive
+    d = getDeclive(carro,novoCarro)
+    #ordnada na origem
+    o = getOrdenadaOrigem(novoCarro, d)
+    f = verifica_parede_no_meio(lp ,d,o )
+    return f
 
 p = pista("../pistas/pista.txt")
 
 start = charPosition (p,"P") [0]
 c = Carro(start)
+
+#Lista de paredes
+#VAR GLOBAL NÂO MEXER
+lp = charPosition(p,'X')
 
 #end = endcarro(charPosition (p,"F"))
 #VARIAVEL GLOBAL NÂO MEXER
