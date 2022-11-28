@@ -61,7 +61,7 @@ class Grafo:
         path.append(start)
         visited.add(start)
         
-        if start in end:
+        if start.getPos() in end:
             custoT = self.calculaCusto(path)
             return (path,custoT)
 
