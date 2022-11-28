@@ -104,6 +104,32 @@ def endcarro(end):
         l.append(novoCarro)
     return l
 
+def getDeclive(CarroEstadoAtual, CarroEstadoSeguinte):
+    x_CarroAtual = CarroEstadoAtual.getPos()[0]
+    y_CarroAtual = CarroEstadoAtual.getPos()[1]
+    
+    x_CarroSeguinte = CarroEstadoAtual.getPos()[0]
+    y_CarroSeguinte = CarroEstadoSeguinte.getPos()[1]
+
+    declive = (y_CarroSeguinte - y_CarroAtual) / (x_CarroSeguinte - x_CarroAtual)
+    
+    return declive
+    
+def getOrdenadaOrigem(CarroEstadoAtual, declive):
+    x_CarroAtual = CarroEstadoAtual.getPos()[0]
+    y_CarroAtual = CarroEstadoAtual.getPos()[1]
+    
+    
+    ordenadaOrigem = y_CarroAtual-declive*x_CarroAtual
+    
+    return ordenadaOrigem
+    
+def verifica_parede_no_meio(lista_de_paredes, declive, ordenadaOrigem):
+    tem_parede = False # se devolver falso, é porque nao tem parede no meio
+    for coordenadas in lista_de_paredes:
+        if coordenadas[1] == int(declive*coordenadas[0] + ordenadaOrigem):
+            tem_parede = True
+            return tem_parede
 
 p = pista("../pistas/pista4.txt")
 
@@ -113,6 +139,8 @@ c = Carro(start)
 #end = endcarro(charPosition (p,"F"))
 #VARIAVEL GLOBAL NÂO MEXER
 end = charPosition (p,"F")
+
+lista_de_paredes = charPosition(p,"#")
 
 g = geraGrafo(p,c)
 
