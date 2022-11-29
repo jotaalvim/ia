@@ -105,6 +105,7 @@ def endcarro(end):
         l.append(novoCarro)
     return l
 
+#NÂO USAMOS ISTO
 def getDeclive(CarroEstadoAtual, CarroEstadoSeguinte):
 
     x_CarroAtual, y_CarroAtual = CarroEstadoAtual.getPos()
@@ -193,7 +194,6 @@ def intersetaParede(pista,c1,c2):
                 c11x += 1
                 ts.append((c11x,c11y))
 
-
     f  = False
     f2 = False
     for x,y in ts:
@@ -209,18 +209,26 @@ def intersetaParede(pista,c1,c2):
     # posso passar?
     return (not f) or (not f2)
 
+def prettyPrint(pista,solve):
 
-p = pista("../pistas/pista.txt")
+    for carro in solve:
+        substuir
+        print(pista)
+
+
+
+
+p = pista("../pistas/pista4.txt")
 
 start = charPosition (p,"P") [0]
 c = Carro(start)
 
 #Lista de paredes
-#VAR GLOBAL NÂO MEXER
+#VAR GLOBAL 
 lp = charPosition(p,'X')
 
 #end = endcarro(charPosition (p,"F"))
-#VARIAVEL GLOBAL NÂO MEXER
+#VARIAVEL GLOBAL 
 end = charPosition (p,"F")
 
 lista_de_paredes = charPosition(p,"#")

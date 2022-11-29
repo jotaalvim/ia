@@ -60,12 +60,12 @@ class Grafo:
     def procuraDFS(self,start,end,path=[],visited=set()):
         path.append(start)
         visited.add(start)
-        
+
         if start.getPos() in end:
             custoT = self.calculaCusto(path)
             return (path,custoT)
 
-        for (adjacente, peso) in self.dic[start]:
+        for adjacente, peso in self.dic[start]:
             if adjacente not in visited:
                 resultado = self.procuraDFS(adjacente, end, path, visited)
                 if resultado is not None:
