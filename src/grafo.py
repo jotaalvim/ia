@@ -162,10 +162,8 @@ class Grafo:
                 # porque todos os seus vizinhos foram inspecionados
                 open_list.remove(n)
                 closed_list.add(n)
-    
             print('Path does not exist!')
             return None
-
 
     def aEstrela(self, start, end):
             # open_list é uma lista de nodos visitados, mas com vizinhos

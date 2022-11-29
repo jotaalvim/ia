@@ -51,7 +51,7 @@ def nextestado(pista,carro):
 
     #end variavel global
     if (posi in end):
-        l.append(carro)
+        l.append((carro,1))
 
     for acele in acel():
         novoCarro = Carro(posi,veli)
@@ -63,14 +63,13 @@ def nextestado(pista,carro):
             #f = temParede(carro,novoCarro)
             f = intersetaParede(pista,carro,novoCarro)
 
-            if f == False or (getChar(pista,(x,y)) == 'X'):
+            if f == False: # or (getChar(pista,(x,y)) == 'X'):
                 novoCarro.setPos(posi)
                 novoCarro.setVel((0,0))
-                if not (novoCarro in l):
-                    l.append(novoCarro)
+                if not ((novoCarro,25) in l):
+                    l.append((novoCarro,25))
             else:
-                l.append(novoCarro)
-
+                l.append((novoCarro,1))
     return l
 
 def getChar(pista, coord):
@@ -90,9 +89,8 @@ def geraGrafo(pista,carro):
         #estado
         e = q.get()
 
-        for car in nextestado(pista,e):
-            g.add_edge(e ,car,1) 
-
+        for car,w in nextestado(pista,e):
+            g.add_edge(e ,car,w) 
             if (car not in v ):
                 q.put(car)
         v.add(e)
@@ -212,15 +210,7 @@ def intersetaParede(pista,c1,c2):
     return (not f) or (not f2)
 
 
-
-
-
-
-
-
-
-
-p = pista("../pistas/pista4.txt")
+p = pista("../pistas/pista.txt")
 
 start = charPosition (p,"P") [0]
 c = Carro(start)
@@ -243,7 +233,8 @@ g = geraGrafo(p,c)
 print("BFS")
 
 solve,w = g.procuraBFS(c,end)
-[print(str(u.getPos())) for u in solve]
+[print(str(u)) for u in solve]
+
 print("custo =",w)
 
 #print("DFS")
