@@ -53,7 +53,6 @@ class Grafo:
 
         if len(listaNodos) == 1:
             return 1
-        print(listaNodos)
 
         _, b = self.retorna(listaNodos[1], self.dic[listaNodos[0]])
         if len(listaNodos) == 2:
