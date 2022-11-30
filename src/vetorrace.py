@@ -216,7 +216,6 @@ def pp(pista,solve):
         #time.sleep(0.3)
 
 
-
 def corre (path):
     p = pista(path)
     start = charPosition (p,"P") [0]
@@ -246,8 +245,7 @@ Escolhe um algoritmo de procura
 #p = pista("../pistas/pista2.txt")
 #start = charPosition (p,"P") [0]
 #c = Carro(start)
-#Lista de paredes #VAR GLOBAL 
-#lp = charPosition(p,'X')
+
 #end = endcarro(charPosition (p,"F")) #VARIAVEL GLOBAL 
 #end = charPosition (p,"F")
 #g = geraGrafo(p,c)
