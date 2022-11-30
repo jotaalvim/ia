@@ -51,6 +51,30 @@ class Grafo:
         if len(listaNodos) == 0:
             return 0
 
+        if len(listaNodos) == 1:
+            return 1
+        print(listaNodos)
+
+        _, b = self.retorna(listaNodos[1], self.dic[listaNodos[0]])
+        if len(listaNodos) == 2:
+            return b
+        return  b + self.calculaCusto(listaNodos[1:])
+
+
+    def procuraDFS(self,start,end,path=[],visited=set()):
+        path.append(start)
+        visited.add(start)
+
+        if start.getPos() in end:
+            custoT = self.calculaCusto(path)
+            return (path,custoT)
+
+        #FIXME nao ta bem
+        if (start in self.dic):
+            for adjacente, peso in self.dic[start]:
+                if adjacente not in visited:
+                    resultado = self.procuraDFS(adjacente, end, path, visited)
+
         _, b = self.retorna(listaNodos[1], self.dic[listaNodos[0]])
         if len(listaNodos) == 2:
             return b

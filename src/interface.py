@@ -1,5 +1,3 @@
-import tabulate 
-
 class Interface:
     def mainMenu():
         print("+----------------------------------------------------------------+")
@@ -26,9 +24,8 @@ class Interface:
         print("|                           PISTA " + numPista + "                   |")
         print("+----------------------------------------------------------------+")      
         print("|                          1-PRINT PISTA                         |")
-        print("|                          2-PRINT GRAFO                         |")
-        print("|                          3-BFS                                 |")
-        print("|                          4-DFS                                 |")
+        print("|                          2-BFS                                 |")
+        print("|                          3-DFS                                 |")
         print("|                          0-VOLTAR ATRÁS                        |")
         print("+----------------------------------------------------------------+") 
     
