@@ -65,11 +65,13 @@ class Grafo:
             custoT = self.calculaCusto(path)
             return (path,custoT)
 
-        for adjacente, peso in self.dic[start]:
-            if adjacente not in visited:
-                resultado = self.procuraDFS(adjacente, end, path, visited)
-                if resultado is not None:
-                    return resultado
+        #FIXME nao ta bem
+        if (start in self.dic):
+            for adjacente, peso in self.dic[start]:
+                if adjacente not in visited:
+                    resultado = self.procuraDFS(adjacente, end, path, visited)
+                    if resultado is not None:
+                        return resultado
 
         path.pop()
         return None

@@ -1,7 +1,4 @@
-#sair da pista -> custo 25
-#    • v = (0,0)
-#movimento -> custo 1
-
+import time
 from grafo import Grafo
 from node import Node
 from queue import Queue
@@ -119,9 +116,7 @@ def getDeclive(CarroEstadoAtual, CarroEstadoSeguinte):
     
 def getOrdenadaOrigem(CarroEstadoAtual, declive):
     x_CarroAtual,y_CarroAtual = CarroEstadoAtual.getPos()
-    
     ordenadaOrigem = y_CarroAtual-declive*x_CarroAtual
-    
     return ordenadaOrigem
     
 def verifica_parede_no_meio(lista_de_paredes, declive, ordenadaOrigem,carro1,carro2):
@@ -209,13 +204,14 @@ def intersetaParede(pista,c1,c2):
     # posso passar?
     return (not f) or (not f2)
 
-def prettyPrint(pista,solve):
-
-    for carro in solve:
-        substuir
-        print(pista)
-
-
+def pp(pista,solve):
+    for carros in solve:
+        x,y = carros.getPos()
+        pista[y][x] = '•'
+        for linha in pista:
+            print("".join(linha))
+        print('\n\n\n\n\n\n\n\n')
+        time.sleep(0.3)
 
 
 p = pista("../pistas/pista4.txt")
@@ -233,17 +229,24 @@ end = charPosition (p,"F")
 
 lista_de_paredes = charPosition(p,"#")
 
+
 g = geraGrafo(p,c)
+print("grafo gerado")
 
 #novoCarro = Carro((17,1),(5,0))
 #print(len(g.dic))
 
-print("BFS")
 
+print("BFS")
 solve,w = g.procuraBFS(c,end)
 [print(str(u)) for u in solve]
-
 print("custo =",w)
+pp(p,solve)
+
+
 
 #print("DFS")
-#print(g.procuraDFS(c,end))
+#solve,w = g.procuraDFS(c,end)
+#[print(str(u)) for u in solve]
+#print("custo =",w)
+#pp(p,solve)
