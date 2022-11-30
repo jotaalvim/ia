@@ -37,7 +37,7 @@ def acel():
 
 #próximas posiçoes possiveis para um carro! 
 #devolve uma lista de novos carros
-def nextestado(pista,carro):
+def nextestado(pista,carro,end):
     l = []
 
     posi = carro.pos
@@ -74,21 +74,21 @@ def getChar(pista, coord):
     return pista[y][x]
 
 
-def geraGrafo(pista,carro):
+def geraGrafo(pista,carro,end):
     # grafo é direcionado
     g = Grafo(True)
     v = set() #visited
     q = Queue()
-
     q.put(carro)
 
     while not q.empty():
         #estado
         e = q.get()
+        le = nextestado(pista,e,end)
 
-        for car,w in nextestado(pista,e):
+        for car,w in le:
             g.add_edge(e ,car,w) 
-            if (car not in v ):
+            if (car not in v):
                 q.put(car)
         v.add(e)
 
@@ -158,8 +158,10 @@ def intersetaParede(pista,c1,c2):
     c2x,c2y = c2.getPos()    
     c22x,c22y = c2.getPos()    
     
-    ts = []
-    ti = []
+    ts = [(c1x,c1y)]
+    ti = [(c2x,c2y)]
+    #ts = []
+    #ti = []
 
     if (c1x <= c2x):
         if (c2y >= c1y):
@@ -208,41 +210,47 @@ def pp(pista,solve):
     for carros in solve:
         x,y = carros.getPos()
         pista[y][x] = '•'
-        for linha in pista:
-            print("".join(linha))
-        print('\n\n\n\n\n\n\n\n')
-        time.sleep(0.3)
+    for linha in pista:
+        print("".join(linha))
+        #print('\n\n\n\n\n\n\n\n')
+        #time.sleep(0.3)
 
 
-p = pista("../pistas/pista4.txt")
 
-start = charPosition (p,"P") [0]
-c = Carro(start)
+def corre (path):
+    p = pista(path)
+    start = charPosition (p,"P") [0]
+    c = Carro(start)
+    end = charPosition (p,"F")
+    print("Gerando grafo")
+    g = geraGrafo(p,c,end)
+    print("Grafo gerado")
+    print(
+"""
+Escolhe um algoritmo de procura
+1 - BFS
+2 - DFS
+""")
+    x = int(input())
+    if x == 1:
+        print("BFS")
+        solve,w = g.procuraBFS(c,end)
+    if x == 2:
+        print("DFS")
+        solve,w = g.procuraDFS(c,end)
+        #[print(str(u)) for u in solve]
+    pp(p,solve)
+    print("custo =",w)
 
-#Lista de paredes
-#VAR GLOBAL 
-lp = charPosition(p,'X')
 
-#end = endcarro(charPosition (p,"F"))
-#VARIAVEL GLOBAL 
-end = charPosition (p,"F")
-
-lista_de_paredes = charPosition(p,"#")
-
-
-g = geraGrafo(p,c)
-print("grafo gerado")
-
-#novoCarro = Carro((17,1),(5,0))
-#print(len(g.dic))
-
-
-print("BFS")
-solve,w = g.procuraBFS(c,end)
-[print(str(u)) for u in solve]
-print("custo =",w)
-pp(p,solve)
-
+#p = pista("../pistas/pista2.txt")
+#start = charPosition (p,"P") [0]
+#c = Carro(start)
+#Lista de paredes #VAR GLOBAL 
+#lp = charPosition(p,'X')
+#end = endcarro(charPosition (p,"F")) #VARIAVEL GLOBAL 
+#end = charPosition (p,"F")
+#g = geraGrafo(p,c)
 
 
 #print("DFS")
