@@ -102,47 +102,15 @@ def endcarro(end):
         l.append(novoCarro)
     return l
 
-#NÂO USAMOS ISTO
-def getDeclive(CarroEstadoAtual, CarroEstadoSeguinte):
+def pp(pista,solve):
+    for carros in solve:
+        x,y = carros.getPos()
+        pista[y][x] = '•'
+    for linha in pista:
+        print("".join(linha))
+        #print('\n\n\n\n\n\n\n\n')
+        #time.sleep(0.3)
 
-    x_CarroAtual, y_CarroAtual = CarroEstadoAtual.getPos()
-    x_CarroSeguinte, y_CarroSeguinte = CarroEstadoSeguinte.getPos()
-    
-    if (x_CarroSeguinte - x_CarroAtual) == 0:
-        return 0
-    declive = (y_CarroSeguinte - y_CarroAtual) / (x_CarroSeguinte - x_CarroAtual)
-    
-    return declive
-    
-def getOrdenadaOrigem(CarroEstadoAtual, declive):
-    x_CarroAtual,y_CarroAtual = CarroEstadoAtual.getPos()
-    ordenadaOrigem = y_CarroAtual-declive*x_CarroAtual
-    return ordenadaOrigem
-    
-def verifica_parede_no_meio(lista_de_paredes, declive, ordenadaOrigem,carro1,carro2):
-    tem_parede = False # se devolver falso, é porque nao tem parede no meio
-    for coordx,coordy in lista_de_paredes:
-        cx,cy   = carro1.getPos()
-        cx2,cy2 = carro2.getPos()
-
-        if ((cx > cx2 and coordx > cx2 and coordx < cx) or (cx2 > cx and coordx > cx  and coordx < cx2)) and ((cy > cy2 and coordy > cy2 and coordy < cy) or (cy2 > cy and coordy > cy  and coordy < cy2)):
-            if coordy == int(declive*coordx + ordenadaOrigem):
-                tem_parede = True
-
-                #print("o = ",ordenadaOrigem)
-                #print("d = ",declive)
-                #print("f = ",tem_parede)
-                return tem_parede
-
-
-def temParede (carro,novoCarro):
-    #declive
-    d = getDeclive(carro,novoCarro)
-    #ordnada na origem
-    o = getOrdenadaOrigem(novoCarro, d)
-
-    f = verifica_parede_no_meio(lp ,d,o,carro,novoCarro )
-    return f
 
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()    
@@ -206,15 +174,6 @@ def intersetaParede(pista,c1,c2):
     # posso passar?
     return (not f) or (not f2)
 
-def pp(pista,solve):
-    for carros in solve:
-        x,y = carros.getPos()
-        pista[y][x] = '•'
-    for linha in pista:
-        print("".join(linha))
-        #print('\n\n\n\n\n\n\n\n')
-        #time.sleep(0.3)
-
 
 def corre (path):
     p = pista(path)
@@ -241,18 +200,3 @@ Escolhe um algoritmo de procura
     pp(p,solve)
     print("custo =",w)
 
-
-#p = pista("../pistas/pista2.txt")
-#start = charPosition (p,"P") [0]
-#c = Carro(start)
-
-#end = endcarro(charPosition (p,"F")) #VARIAVEL GLOBAL 
-#end = charPosition (p,"F")
-#g = geraGrafo(p,c)
-
-
-#print("DFS")
-#solve,w = g.procuraDFS(c,end)
-#[print(str(u)) for u in solve]
-#print("custo =",w)
-#pp(p,solve)
