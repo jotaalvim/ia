@@ -1,4 +1,6 @@
 import time
+import copy
+import math
 from grafo import Grafo
 from node import Node
 from queue import Queue
@@ -88,6 +90,8 @@ def geraGrafo(pista,carro,end):
 
         for car,w in le:
             g.add_edge(e ,car,w) 
+            g.add_heuristica(car, melhorDistance(carro,end)) 
+
             if (car not in v):
                 q.put(car)
         v.add(e)
@@ -103,10 +107,12 @@ def endcarro(end):
     return l
 
 def pp(pista,solve):
+    pista2 = copy.deepcopy(pista)
+
     for carros in solve:
         x,y = carros.getPos()
-        pista[y][x] = '•'
-    for linha in pista:
+        pista2[y][x] = '•'
+    for linha in pista2:
         print("".join(linha))
         #print('\n\n\n\n\n\n\n\n')
         #time.sleep(0.3)
@@ -174,29 +180,44 @@ def intersetaParede(pista,c1,c2):
     # posso passar?
     return (not f) or (not f2)
 
+#
+#def corre (path):
+#    p = pista(path)
+#    start = charPosition (p,"P") [0]
+#    c = Carro(start)
+#    end = charPosition (p,"F")
+#    print("Gerando grafo")
+#    g = geraGrafo(p,c,end)
+#    print("Grafo gerado")
+#    print(
+#"""
+#Escolhe um algoritmo de procura
+#1 - BFS
+#2 - DFS
+#""")
+#    x = int(input())
+#    if x == 1:
+#        print("BFS")
+#        solve,w = g.procuraBFS(c,end)
+#    if x == 2:
+#        print("DFS")
+#        solve,w = g.procuraDFS(c,end)
+#        #[print(str(u)) for u in solve]
+#    pp(p,solve)
+#    print("custo =",w)
 
-def corre (path):
-    p = pista(path)
-    start = charPosition (p,"P") [0]
-    c = Carro(start)
-    end = charPosition (p,"F")
-    print("Gerando grafo")
-    g = geraGrafo(p,c,end)
-    print("Grafo gerado")
-    print(
-"""
-Escolhe um algoritmo de procura
-1 - BFS
-2 - DFS
-""")
-    x = int(input())
-    if x == 1:
-        print("BFS")
-        solve,w = g.procuraBFS(c,end)
-    if x == 2:
-        print("DFS")
-        solve,w = g.procuraDFS(c,end)
-        #[print(str(u)) for u in solve]
-    pp(p,solve)
-    print("custo =",w)
 
+def distance (pos1,pos2):
+    x1,y1 = pos1
+    x2,y2 = pos2
+    return math.sqrt( math.pow(x1-x2,2) + math.pow(y1-y2,2))
+
+def melhorDistance (carro, end):
+    pos = carro.getPos()
+    # m = menor dist até ao momento
+    m = 0
+    for pos2 in end:
+        k = distance(pos,pos2)
+        if m > k:
+            m = k
+    return m

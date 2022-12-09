@@ -1,21 +1,21 @@
-from interface import Interface
-from vetorrace  import *
+from interface import *
+from vetorrace import *
 
 def main():
     saida = -1
 
     while saida != 0:
-        Interface.mainMenu()
-        saida = Interface.pedeInput()
+        mainMenu()
+        saida = pedeInput()
         if saida == 0:
-            Interface.sair()
+            sair()
         elif saida == 1:
             i = -1
             while i != 0:
-                Interface.jogarMenu()
-                i = Interface.pedeInput()
+                jogarMenu()
+                i = pedeInput()
                 if i == 0:
-                    Interface.voltarMenuPrincipal()
+                    voltarMenuPrincipal()
                 elif(i == 1 or i == 2 or i == 3 or i == 4): 
                     e = -1
                     path = f"../pistas/pista{i}.txt"
@@ -25,8 +25,8 @@ def main():
                     end = charPosition (p,"F")
                     g = geraGrafo(p,c,end)
                     while e!=0:
-                        Interface.pistaMenu(str(i))
-                        e=Interface.pedeInput()
+                        pistaMenu(str(i))
+                        e=pedeInput()
                         
                         # depos é implementar as merdas
                         #printpista
@@ -37,15 +37,25 @@ def main():
                             pp(p,solve2)
                             print("custo =",w2)
                         elif e == 3:
+
                             solve,w = g.procuraDFS(c,end)
                             pp(p,solve)
                             print("custo =",w)
+                        elif e == 4:
+                            solve3,w3 = g.greedy(c,end)
+                            pp(p,solve3)
+                            print("custo =",w3)
+                        elif e == 5:
+                            solve4,w4 = g.aEstrela(c,end)
+                            pp(p,solve4)
+                            print("custo =",w4)
+
                         else:
-                            Interface.entradaInvalida()
+                            entradaInvalida()
                 else:
-                    Interface.entradaInvalida()
+                    entradaInvalida()
         else: 
-            Interface.entradaInvalida()
+            entradaInvalida()
         
 if __name__ == "__main__":
     main()
