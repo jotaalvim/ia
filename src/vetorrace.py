@@ -1,4 +1,5 @@
 import time
+import os
 import copy
 import math
 from grafo import Grafo
@@ -75,7 +76,6 @@ def getChar(pista, coord):
     x,y = coord
     return pista[y][x]
 
-
 def geraGrafo(pista,carro,end):
     # grafo é direcionado
     g = Grafo(True)
@@ -108,19 +108,30 @@ def endcarro(end):
 
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
+    
+    # Δ = 1 segundo
+    delta = 2
 
-    for carros in solve:
-        x,y = carros.getPos()
-        pista2[y][x] = '•'
+    os.system('clear')
     for linha in pista2:
         print("".join(linha))
-        #print('\n\n\n\n\n\n\n\n')
-        #time.sleep(0.3)
+
+    for carros in solve:
+        os.system('clear')
+        x,y = carros.getPos()
+        pista2[y][x] = '•'
+        lixo = pista2
+        for linha in pista2:
+            print("".join(linha))
+        time.sleep( delta / len(solve) )
 
 
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()    
     c2x,c2y = c2.getPos()    
+
+    if (pista[c2y] [c2x] == "X"):
+        return False
 
     if (c1x > c2x):
         aux = Carro((c1x,c1y))

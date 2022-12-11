@@ -20,7 +20,7 @@ def jogarMenu():
     
 def pistaMenu(numPista):
     print("┌────────────────────────────────────────────────────────────────┐")
-    print("│                           PISTA " + numPista + "                   │")
+    print("│                           PISTA " + numPista + "                              │")
     print("├────────────────────────────────────────────────────────────────┤")      
     print("│                         1 ─ PRINT PISTA                        │")
     print("│                         2 ─ BFS                                │")

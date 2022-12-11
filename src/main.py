@@ -45,6 +45,7 @@ def main():
                             solve3,w3 = g.greedy(c,end)
                             pp(p,solve3)
                             print("custo =",w3)
+
                         elif e == 5:
                             solve4,w4 = g.aEstrela(c,end)
                             pp(p,solve4)
