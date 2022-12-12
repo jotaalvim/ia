@@ -2,6 +2,7 @@ import time
 import os
 import copy
 import math
+import ast
 from grafo import Grafo
 from node import Node
 from queue import Queue
@@ -14,7 +15,7 @@ def pista(path:str):
     conteudo = f.read()
     #conteudo.split('\n')
     conteudo = conteudo.splitlines()
-    
+
     for linha in conteudo:
         aux = []
         aux[:0] = linha
@@ -38,7 +39,7 @@ def charPosition(pista,char):
 def acel():
     return [(-1,-1),(-1,0),(-1,1),(0,-1),(0,0),(0,1),(1,-1),(1,0),(1,1)]
 
-#próximas posiçoes possiveis para um carro! 
+#próximas posiçoes possiveis para um carro!
 #devolve uma lista de novos carros
 def nextestado(pista,carro,end):
     l = []
@@ -58,7 +59,7 @@ def nextestado(pista,carro,end):
         novoCarro.nextPosicao(acele)
 
         x,y = novoCarro.pos
-        
+
         if not (x < 0 or x > largura or y < 0 or y > altura):
             #f = temParede(carro,novoCarro)
             f = intersetaParede(pista,carro,novoCarro)
@@ -89,8 +90,8 @@ def geraGrafo(pista,carro,end):
         le = nextestado(pista,e,end)
 
         for car,w in le:
-            g.add_edge(e ,car,w) 
-            g.add_heuristica(car, melhorDistance(carro,end)) 
+            g.add_edge(e ,car,w)
+            g.add_heuristica(car, melhorDistance(carro,end))
 
             if (car not in v):
                 q.put(car)
@@ -108,7 +109,7 @@ def endcarro(end):
 
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
-    
+
     # Δ = 1 segundo
     delta = 2
 
@@ -127,8 +128,8 @@ def pp(pista,solve):
 
 
 def intersetaParede(pista,c1,c2):
-    c1x,c1y = c1.getPos()    
-    c2x,c2y = c2.getPos()    
+    c1x,c1y = c1.getPos()
+    c2x,c2y = c2.getPos()
 
     if (pista[c2y] [c2x] == "X"):
         return False
@@ -138,11 +139,11 @@ def intersetaParede(pista,c1,c2):
         c1 = c2
         c2 = aux
 
-    c1x,c1y = c1.getPos()    
-    c11x,c11y = c1.getPos()    
-    c2x,c2y = c2.getPos()    
-    c22x,c22y = c2.getPos()    
-    
+    c1x,c1y = c1.getPos()
+    c11x,c11y = c1.getPos()
+    c2x,c2y = c2.getPos()
+    c22x,c22y = c2.getPos()
+
     ts = [(c1x,c1y)]
     ti = [(c2x,c2y)]
     #ts = []
@@ -182,7 +183,7 @@ def intersetaParede(pista,c1,c2):
         if (pista[y][x] == 'X'):
             f = True
             break
-        
+
     for x,y in ti:
         if (pista[y][x] == 'X'):
             f2 = True
@@ -232,3 +233,33 @@ def melhorDistance (carro, end):
         if m > k:
             m = k
     return m
+
+
+def pedePos():
+    inputUtilizador = input('Insere as coordenadas onde queres que começe o carro: ')
+    tokens = inputUtilizador.split(",")
+    for token in tokens:
+        token = token.strip()
+
+    # print(f"Tokens: {tokens}")
+    return tuple(map(int, tokens))
+
+def insertInitPos (pista, n):
+    number_of_cars = n
+    while number_of_cars != 0:
+        posDesejada = pedePos()
+        # pos1 = getCharPosition(pista, posDesejada)
+        # x = getChar(pista, posDesejada)
+        # x = x.replace(char, "P")
+        pista[posDesejada[1]][posDesejada[0]] = "P"
+        number_of_cars -= 1
+    return pista
+
+def teste():
+    path = f"../pistas/pista2.txt"
+    p = pista(path)
+    print(p)
+    n = 2
+    insertInitPos(p, n)
+    print(p)
+teste()
