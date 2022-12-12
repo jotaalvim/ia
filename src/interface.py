@@ -12,7 +12,7 @@ def playerNumber():
     print("├────────────────────────────────────────────────────────────────┤")
     print("│                             1-Singleplayer                     │")
     print("│                             2-Multiplayer                      │")
-    print("│                             3-Sair                             │")
+    print("│                             0-Sair                             │")
     print("└────────────────────────────────────────────────────────────────┘")
 
 # Caso selecione Multiplayer -> "Introduza o número de jogadores"
