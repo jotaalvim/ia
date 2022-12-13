@@ -109,10 +109,11 @@ def endcarro(end):
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
     
-    # Δ = 1 segundo
+    # Δ tempo 
     delta = 2
 
     os.system('clear')
+
     for linha in pista2:
         print("".join(linha))
 
@@ -120,7 +121,6 @@ def pp(pista,solve):
         os.system('clear')
         x,y = carros.getPos()
         pista2[y][x] = '•'
-        lixo = pista2
         for linha in pista2:
             print("".join(linha))
         time.sleep( delta / len(solve) )
@@ -232,3 +232,47 @@ def melhorDistance (carro, end):
         if m > k:
             m = k
     return m
+
+
+"""
+ter N carros na corrida
+    ⚠ lidar com as colisões
+    
+    algoritmo para gerar o caminho para os n carros
+        • gerar o grafo normalmente
+        1. Calcular o caminho do primeiro carro
+            gardar o nº da iteração
+            casa de cada carro
+        2. Para o carro seguinte
+"""
+
+def carros(listaCarros, end, grafo, algoritmo):
+    solution = []
+    #lista de posiçoes usadas
+    usadas = []
+    #guarda soluções temporárias
+    aux = []
+    # nº carros
+    n = len(listaCarros)
+
+    for c in listaCarros:
+        solve,w = grafo.procuraBFS(c,end)
+        aux.append((solve,w))
+
+    for sol,w in aux:
+        solution.append(sol[0])
+
+    usadas = [carro.getPos() for carro in solution]
+    # devia guardar com um identificador 
+
+    for carro in solution:
+        pos = carro.getPos()
+        if (usadas.count(pos) > 1):
+            #colidir
+        else:
+            #passo ao próximo carro
+
+
+
+# LISTA que cada carro vai percorrer 
+    return solution

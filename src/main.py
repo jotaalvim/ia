@@ -24,6 +24,7 @@ def main():
                     c = Carro(start)
                     end = charPosition (p,"F")
                     g = geraGrafo(p,c,end)
+
                     while e!=0:
                         pistaMenu(str(i))
                         e=pedeInput()
