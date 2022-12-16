@@ -1,4 +1,3 @@
-from node  import Node
 from queue import Queue
 
 class Grafo:
@@ -43,6 +42,7 @@ class Grafo:
         for n,p in listaNodos:
             if n == name:
                 return n,p
+        return name,1
 
     def calculaCusto (self,listaNodos):
         if len(listaNodos) == 0:
@@ -105,6 +105,7 @@ class Grafo:
 
         path.reverse()
 
+        #return (path, 0)
         return (path, self.calculaCusto(path))
         
     def add_heuristica(self,nodo,x):
