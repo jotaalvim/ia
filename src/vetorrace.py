@@ -258,26 +258,20 @@ def melhorDistance (carro, end):
 
 
 def carros(listaCarros, end, grafo, algoritmo):
+    alg = {1: grafo.procuraBFS, 2: grafo.procuraDFS, 3:grafo.greedy, 4: grafo.aEstrela }
+
+    f = alg[algoritmo]
+
     solution = []
     #lista de posiçoes usadas
     usadas = []
-    #guarda soluções temporárias
-    aux = []
     done = set()
     #nº carros
     dic = {}
     n = 0
     #inicializar 
     for c in listaCarros:
-        if (algoritmo == "greedy"):
-            solve,w = grafo.greedy(c,end)
-        if (algoritmo == "aEstrela"):
-            solve,w = grafo.aEstrela(c,end)
-        if (algoritmo == "BFS"):
-            solve,w = grafo.procuraBFS(c,end)
-        if (algoritmo == "greedy"):
-            solve,w = grafo.greedy(c,end)
-
+        solve,w = f(c,end)
         #aux.append((solve,w))
         dic[n] = [solve[0]]
         n += 1
@@ -296,8 +290,8 @@ def carros(listaCarros, end, grafo, algoritmo):
             #    solve,w = grafo.procuraBFS(c,end)
             #if (algoritmo == "greedy"):
             #    solve,w = grafo.procuraDFS(c,end)
-
-            solve,w = grafo.greedy(last, end)
+            #solve,w = f(c,end)
+            solve,w = grafo.aEstrela(last, end)
 
             usadas = [dic[car][-1].getPos() for car in range(key)]
 
@@ -318,8 +312,6 @@ def carros(listaCarros, end, grafo, algoritmo):
                     ncarro.setVel((0,0))
                 dic[key].append(ncarro)
     return dic
-
-
 
 # LISTA que cada carro vai percorrer 
     return solution
@@ -352,7 +344,7 @@ def teste():
     insertInitPos(p, n)
     print(p)
 
-np = 3
+np = 2
 path  = f"../pistas/pista{np}.txt"
 p     = pista(path)
 start = charPosition(p,"P")
@@ -360,6 +352,7 @@ end   = charPosition(p,"F")
 c     = Carro(start[0])
 c2    = Carro((1,1))
 c3    = Carro((4,1))
+c4    = Carro((2,2))
 #c2    = Carro((10,1))
 #c3    = Carro((18,1))
 #c2    = Carro((36,43))
@@ -375,7 +368,7 @@ else:
     with open(pathFile, "wb") as f:
         print("dumping data to "+pathFile)
         pickle.dump(g, f)
-lista = [c,c2,c3]
+lista = [c,c2,c3,c4]
 #lista = [c]
 
-ç     = carros(lista,end,g,"greedy")
+ç     = carros(lista,end,g,4)
