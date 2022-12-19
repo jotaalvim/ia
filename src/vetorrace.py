@@ -344,6 +344,7 @@ def insertInitPos (pista, n):
         number_of_cars -= 1
     return pista
 
+
 def teste():
     path = f"../pistas/pista2.txt"
     p = pista(path)
