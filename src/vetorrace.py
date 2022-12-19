@@ -156,7 +156,7 @@ def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
     c2x,c2y = c2.getPos()
 
-    if (pista[c2y] [c2x] == "X"):
+    if (pista[c2y][c2x] == "X"):
         return False
 
     if (c1x > c2x):
@@ -215,31 +215,6 @@ def intersetaParede(pista,c1,c2):
     # posso passar?
     return (not f) or (not f2)
 
-#def corre (path):
-#    p = pista(path)
-#    start = charPosition (p,"P") [0]
-#    c = Carro(start)
-#    end = charPosition (p,"F")
-#    print("Gerando grafo")
-#    g = geraGrafo(p,c,end)
-#    print("Grafo gerado")
-#    print(
-#"""
-#Escolhe um algoritmo de procura
-#1 - BFS
-#2 - DFS
-#""")
-#    x = int(input())
-#    if x == 1:
-#        print("BFS")
-#        solve,w = g.procuraBFS(c,end)
-#    if x == 2:
-#        print("DFS")
-#        solve,w = g.procuraDFS(c,end)
-#        #[print(str(u)) for u in solve]
-#    pp(p,solve)
-#    print("custo =",w)
-
 
 def distance (pos1,pos2):
     x1,y1 = pos1
@@ -260,7 +235,8 @@ def melhorDistance (carro, end):
 def carros(listaCarros, end, grafo, algoritmo):
     alg = {1: grafo.procuraBFS, 2: grafo.procuraDFS, 3:grafo.greedy, 4: grafo.aEstrela }
 
-    f = alg[algoritmo]
+    #f = alg[algoritmo]
+    f = alg.get(algoritmo)
 
     solution = []
     #lista de posiçoes usadas
@@ -273,8 +249,9 @@ def carros(listaCarros, end, grafo, algoritmo):
     for c in listaCarros:
         solve,w = f(c,end)
         #aux.append((solve,w))
-        dic[n] = [solve[0]]
-        n += 1
+        if solve != []:
+            dic[n] = [solve[0]]
+            n += 1
     
     n = len(listaCarros)
 
@@ -282,24 +259,13 @@ def carros(listaCarros, end, grafo, algoritmo):
         for key in range(n):
             # ultimo carro da solução
             last = dic[key][-1]
-            #if (algoritmo == "greedy"):
-            #    solve,w = grafo.greedy(c,end)
-            #if (algoritmo == "aEstrela"):
-            #    solve,w = grafo.aEstrela(c,end)
-            #if (algoritmo == "BFS"):
-            #    solve,w = grafo.procuraBFS(c,end)
-            #if (algoritmo == "greedy"):
-            #    solve,w = grafo.procuraDFS(c,end)
-            #solve,w = f(c,end)
             solve,w = grafo.aEstrela(last, end)
 
             usadas = [dic[car][-1].getPos() for car in range(key)]
 
             if (len(solve) == 1):
-                #FIXME
                 done.add(key)
                 dic[key].append(solve[0])
-                #print(solve[0].getPos(), end)
             elif (solve[1].getPos() in end ): #cheguei ao fim
                 done.add(key)
                 dic[key].append(solve[1])
@@ -344,7 +310,7 @@ def teste():
     insertInitPos(p, n)
     print(p)
 
-np = 2
+np = 3
 path  = f"../pistas/pista{np}.txt"
 p     = pista(path)
 start = charPosition(p,"P")
@@ -353,6 +319,7 @@ c     = Carro(start[0])
 c2    = Carro((1,1))
 c3    = Carro((4,1))
 c4    = Carro((2,2))
+c5    = Carro((3,3))
 #c2    = Carro((10,1))
 #c3    = Carro((18,1))
 #c2    = Carro((36,43))
@@ -363,12 +330,17 @@ if os.path.exists(pathFile):
     with open(pathFile, "rb") as file:
         print("loading data from "+pathFile)
         g = pickle.load(file)
+        print("done")
 else:
     g = geraGrafo(p,c,end)
     with open(pathFile, "wb") as f:
         print("dumping data to "+pathFile)
         pickle.dump(g, f)
-lista = [c,c2,c3,c4]
+        print("done")
+lista = [c,c2,c3]
 #lista = [c]
 
-ç     = carros(lista,end,g,4)
+#ç     = carros(lista,end,g,4)
+
+#ppCarros(p,ç,g)
+
