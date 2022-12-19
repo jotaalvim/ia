@@ -18,7 +18,10 @@ def playerNumber():
     print("│                             0-Sair                             │")
     print("└────────────────────────────────────────────────────────────────┘")
 
-# Caso selecione Multiplayer -> "Introduza o número de jogadores"
+def numOfPlayers():
+    print("┌────────────────────────────────────────────────────────────────┐")
+    print("│                INTRODUZA O NÚMERO DE JOGADORES                 │")
+    print("├────────────────────────────────────────────────────────────────┤")
 
 def jogarMenu():
     os.system("clear")
