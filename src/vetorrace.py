@@ -389,9 +389,9 @@ else:
 lista = [c,c2,c3]
 #lista = [c]
 
-ç = carrosaEstrela(lista,end,g)
-ç = carrosgreedy(lista,end,g)
-ç = carrosBFS(lista,end,g)
+#ç = carrosaEstrela(lista,end,g)
+#ç = carrosgreedy(lista,end,g)
+#ç = carrosBFS(lista,end,g)
 #
-ppCarros(p,ç,g)
+#ppCarros(p,ç,g)
 
