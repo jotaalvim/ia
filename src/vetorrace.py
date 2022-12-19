@@ -108,7 +108,7 @@ def endcarro(end):
 
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
-    # Δ tempo 
+    # Δ tempo
     delta = 2
     os.system('clear')
     for linha in pista2:
@@ -174,31 +174,39 @@ def intersetaParede(pista,c1,c2):
 
     if (c1x <= c2x):
         if (c2y >= c1y):
-            while c1x != c2x:
-                c1x += 1
-                ts.append((c1x,c1y))
-            while c1y != c2y:
-                c1y += 1
-                ts.append((c1x,c1y))
-            while c11y != c22y:
-                c11y += 1
-                ti.append((c11x,c11y))
-            while c11x != c22x:
-                c11x += 1
-                ti.append((c11x,c11y))
+            ts.extend([(cx,c1y) for cx in range(c1x,c2x+1)])
+            #while c1x != c2x:
+                #c1x += 1
+                #ts.append((c1x,c1y))
+            ts.extend([(c1x,cy) for cy in range(c1y,c2y+1)])
+            #while c1y != c2y:
+                #c1y += 1
+                #ts.append((c1x,c1y))
+            ti.extend([(c11x,cy) for cy in range(c11y,c22y+1)])
+            #while c11y != c22y:
+                #c11y += 1
+                #ti.append((c11x,c11y))
+            ti.extend([(cx,c11y) for cx in range(c11x,c22x+1)])
+            #while c11x != c22x:
+                #c11x += 1
+                #ti.append((c11x,c11y))
         else:
-            while c1x != c2x:
-                c1x += 1
-                ti.append((c1x,c1y))
-            while c1y != c2y:
-                c1y -= 1
-                ti.append((c1x,c1y))
-            while c11y != c22y:
-                c11y -= 1
-                ts.append((c11x,c11y))
-            while c11x != c22x:
-                c11x += 1
-                ts.append((c11x,c11y))
+            ti.extend([(cx,c1y) for cx in range(c1x,c2x+1)])
+            #while c1x != c2x:
+                #c1x += 1
+                #ti.append((c1x,c1y))
+            ti.extend([(c1x,cy) for cy in range(c1y,c2y+1)])
+            #while c1y != c2y:
+                #c1y -= 1
+                #ti.append((c1x,c1y))
+            ts.extend([(c11x,cy) for cy in range(c11y,c22y+1)])
+            #while c11y != c22y:
+                #c11y -= 1
+                #ts.append((c11x,c11y))
+            ts.extend([(cx,c11y) for cx in range(c11x,c22x+1)])
+            #while c11x != c22x:
+                #c11x += 1
+                #ts.append((c11x,c11y))
 
     f  = False
     f2 = False
@@ -260,7 +268,7 @@ def melhorDistance (carro, end):
 def carros(listaCarros, end, grafo, algoritmo):
     alg = {1: grafo.procuraBFS, 2: grafo.procuraDFS, 3:grafo.greedy, 4: grafo.aEstrela }
 
-    f = alg[algoritmo]
+    f = alg.get(algoritmo)
 
     solution = []
     #lista de posiçoes usadas
@@ -269,13 +277,13 @@ def carros(listaCarros, end, grafo, algoritmo):
     #nº carros
     dic = {}
     n = 0
-    #inicializar 
+    #inicializar
     for c in listaCarros:
         solve,w = f(c,end)
         #aux.append((solve,w))
         dic[n] = [solve[0]]
         n += 1
-    
+
     n = len(listaCarros)
 
     while len(done) != n:
@@ -313,7 +321,7 @@ def carros(listaCarros, end, grafo, algoritmo):
                 dic[key].append(ncarro)
     return dic
 
-# LISTA que cada carro vai percorrer 
+# LISTA que cada carro vai percorrer
     return solution
 
 def pedePos():
@@ -344,7 +352,7 @@ def teste():
     insertInitPos(p, n)
     print(p)
 
-np = 2
+np = 3
 path  = f"../pistas/pista{np}.txt"
 p     = pista(path)
 start = charPosition(p,"P")
