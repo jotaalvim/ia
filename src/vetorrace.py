@@ -149,9 +149,6 @@ def ppCarros(pista,dicionario,grafo):
         print("custo", l[i]," = ", grafo.calculaCusto(dicionario[i]))
 
 
-
-
-
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
     c2x,c2y = c2.getPos()
@@ -230,7 +227,6 @@ def melhorDistance (carro, end):
         if m > k:
             m = k
     return m
-
 
 def carros(listaCarros, end, grafo, algoritmo):
     alg = {1: grafo.procuraBFS, 2: grafo.procuraDFS, 3:grafo.greedy, 4: grafo.aEstrela }
