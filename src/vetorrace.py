@@ -108,7 +108,7 @@ def endcarro(end):
 
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
-    # Δ tempo 
+    # Δ tempo
     delta = 2
     os.system('clear')
     for linha in pista2:
@@ -148,57 +148,37 @@ def ppCarros(pista,dicionario,grafo):
     for i in range(n):
         print("custo", l[i]," = ", grafo.calculaCusto(dicionario[i]))
 
-
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
     c2x,c2y = c2.getPos()
 
     if (pista[c2y][c2x] == "X"):
         return False
+    ts = []
+    ti = []
 
-    if (c1x > c2x):
-        aux = Carro((c1x,c1y))
-        c1 = c2
-        c2 = aux
+    if (c1x >= c2x):
+        ix = c2x
+        fx = c1x
+    else:
+        ix = c1x
+        fx = c2x
+    if (c1y >= c2y):
+        iy = c2y
+        fy = c1y
+    else:
+        iy = c1y
+        fy = c2y
 
-    c1x,c1y = c1.getPos()
-    c11x,c11y = c1.getPos()
-    c2x,c2y = c2.getPos()
-    c22x,c22y = c2.getPos()
+    ts.extend([(xx,iy) for xx in range(ix,fx)])
+    ts.extend([(ix,yy) for yy in range(iy,fy)])
+    ti.extend([(xx,fy) for xx in range(ix,fx)])
+    ti.extend([(fx,yy) for yy in range(iy,fy)])
 
-    ts = [(c1x,c1y)]
-    ti = [(c2x,c2y)]
-
-    if (c1x <= c2x):
-        if (c2y >= c1y):
-            while c1x != c2x:
-                c1x += 1
-                ts.append((c1x,c1y))
-            while c1y != c2y:
-                c1y += 1
-                ts.append((c1x,c1y))
-            while c11y != c22y:
-                c11y += 1
-                ti.append((c11x,c11y))
-            while c11x != c22x:
-                c11x += 1
-                ti.append((c11x,c11y))
-        else:
-            while c1x != c2x:
-                c1x += 1
-                ti.append((c1x,c1y))
-            while c1y != c2y:
-                c1y -= 1
-                ti.append((c1x,c1y))
-            while c11y != c22y:
-                c11y -= 1
-                ts.append((c11x,c11y))
-            while c11x != c22x:
-                c11x += 1
-                ts.append((c11x,c11y))
 
     f  = False
     f2 = False
+
     for x,y in ts:
         if (pista[y][x] == 'X'):
             f = True
@@ -228,37 +208,29 @@ def melhorDistance (carro, end):
             m = k
     return m
 
-def carros(listaCarros, end, grafo, algoritmo):
-    alg = {1: grafo.procuraBFS, 2: grafo.procuraDFS, 3:grafo.greedy, 4: grafo.aEstrela }
-
-    #f = alg[algoritmo]
-    f = alg.get(algoritmo)
-
-    solution = []
+def carrosBFS(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
     done = set()
     #nº carros
     dic = {}
     n = 0
-    #inicializar 
+    #inicializar
     for c in listaCarros:
-        solve,w = f(c,end)
+        solve,w = grafo.procuraBFS(c,end)
         #aux.append((solve,w))
-        if solve != []:
-            dic[n] = [solve[0]]
-            n += 1
-    
+        dic[n] = [solve[0]]
+        n += 1
     n = len(listaCarros)
-
+    
     while len(done) != n:
         for key in range(n):
             # ultimo carro da solução
             last = dic[key][-1]
-            solve,w = grafo.aEstrela(last, end)
-
+            solve,w = grafo.procuraBFS(last, end)
+    
             usadas = [dic[car][-1].getPos() for car in range(key)]
-
+    
             if (len(solve) == 1):
                 done.add(key)
                 dic[key].append(solve[0])
@@ -268,18 +240,98 @@ def carros(listaCarros, end, grafo, algoritmo):
             else:
                 ncarro = copy.deepcopy(solve[1])
                 pos = ncarro.getPos()
-
+     
                 if (pos in usadas):
                     ncarro.setPos( solve[0].getPos() )
                     ncarro.setVel((0,0))
                 dic[key].append(ncarro)
     return dic
 
-# LISTA que cada carro vai percorrer 
-    return solution
+
+
+def carrosgreedy(listaCarros, end, grafo):
+    #lista de posiçoes usadas
+    usadas = []
+    done = set()
+    #nº carros
+    dic = {}
+    n = 0
+    #inicializar
+    for c in listaCarros:
+        solve,w = grafo.greedy(c,end)
+        #aux.append((solve,w))
+        dic[n] = [solve[0]]
+        n += 1
+    n = len(listaCarros)
+    
+    while len(done) != n:
+        for key in range(n):
+            # ultimo carro da solução
+            last = dic[key][-1]
+            solve,w = grafo.greedy(last, end)
+    
+            usadas = [dic[car][-1].getPos() for car in range(key)]
+    
+            if (len(solve) == 1):
+                done.add(key)
+                dic[key].append(solve[0])
+            elif (solve[1].getPos() in end ): #cheguei ao fim
+                done.add(key)
+                dic[key].append(solve[1])
+            else:
+                ncarro = copy.deepcopy(solve[1])
+                pos = ncarro.getPos()
+     
+                if (pos in usadas):
+                    ncarro.setPos( solve[0].getPos() )
+                    ncarro.setVel((0,0))
+                dic[key].append(ncarro)
+    return dic
+
+
+
+def carrosaEstrela(listaCarros, end, grafo):
+    #lista de posiçoes usadas
+    usadas = []
+    done = set()
+    #nº carros
+    dic = {}
+    n = 0
+    #inicializar
+    for c in listaCarros:
+        solve,w = grafo.aEstrela(c,end)
+        #aux.append((solve,w))
+        dic[n] = [solve[0]]
+        n += 1
+    n = len(listaCarros)
+    
+    while len(done) != n:
+        for key in range(n):
+            # ultimo carro da solução
+            last = dic[key][-1]
+            solve,w = grafo.aEstrela(last, end)
+    
+            usadas = [dic[car][-1].getPos() for car in range(key)]
+    
+            if (len(solve) == 1):
+                done.add(key)
+                dic[key].append(solve[0])
+            elif (solve[1].getPos() in end ): #cheguei ao fim
+                done.add(key)
+                dic[key].append(solve[1])
+            else:
+                ncarro = copy.deepcopy(solve[1])
+                pos = ncarro.getPos()
+     
+                if (pos in usadas):
+                    ncarro.setPos( solve[0].getPos() )
+                    ncarro.setVel((0,0))
+                dic[key].append(ncarro)
+    return dic
 
 def pedePos():
     inputUtilizador = input('Insere as coordenadas onde queres que começe o carro: ')
+
     tokens = inputUtilizador.split(",")
     for token in tokens:
         token = token.strip()
@@ -336,7 +388,9 @@ else:
 lista = [c,c2,c3]
 #lista = [c]
 
-#ç     = carros(lista,end,g,4)
-
-#ppCarros(p,ç,g)
+ç = carrosaEstrela(lista,end,g)
+ç = carrosgreedy(lista,end,g)
+ç = carrosBFS(lista,end,g)
+#
+ppCarros(p,ç,g)
 
