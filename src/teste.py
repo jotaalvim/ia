@@ -38,8 +38,8 @@ def main():
                         elif(pista == 1 or pista == 2 or pista == 3 or pista == 4):
                             flag4=True
                             
-                            mudarPartidaVar = -1
-                            while flag4 ==True:
+                            shutil.copy(f"../pistas/pista{pista}.txt","../pistasUser/pistaUser.txt")
+                            while flag4:
                                 mudarPartida()
                                 mudarPartidaVar = entrada() 
                                 
@@ -47,7 +47,7 @@ def main():
                                     flag4=False
                                 
                                 elif mudarPartidaVar == 1:
-                                    shutil.copy(f"../pistas/pista{pista}.txt","../pistasUser/pistaUser.txt")
+                                    
                                     pedeCoord()
                                     coordenadas = coords() 
                                     mudaPartidas(coordenadas,"../pistasUser/pistaUser.txt")
@@ -70,7 +70,7 @@ def main():
                             
                             flag5 = True
                             while flag5:
-                                pistaMenu(pista)
+                                pistaMenu(str(pista))
                                 pistaMenuVar = entrada() 
                                 
                                 if pistaMenuVar == 0:
@@ -134,13 +134,13 @@ def main():
                             
                             flag8=True
                             while flag8:
-                                pistaMenu()
-                                pistaMenu = entrada() 
+                                pistaMenu(str(pista))
+                                pistaMenuVar = entrada() 
                                 
-                                if pistaMenu == 0:
+                                if pistaMenuVar == 0:
                                     voltarMenu()
                                     flag8=False
-                                elif pistaMenu == 1:
+                                elif pistaMenuVar == 1:
                                      pp(p,[])
                                 elif pistaMenu == 2:
                                     solve2,w2 = g.procuraBFS(c,end)
