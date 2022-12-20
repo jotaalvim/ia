@@ -13,6 +13,7 @@ def main():
             sair()
     #jogar
         elif saida == 1:
+<<<<<<< HEAD
             i = -1
             while i != 0:
     #menu numjogadores
@@ -83,6 +84,105 @@ def main():
                                     pp(p,solve2)
                                     print("custo =",w2)
                                 #elif e == 3: )
+=======
+            #i = -1
+            #while i != 0:
+            #    jogarMenu()
+            #    i = pedeInput()
+            #    if i == 0:
+            #        voltarMenuPrincipal()
+            #    elif(i == 1 or i == 2 or i == 3 or i == 4):
+            #        e = -1
+            #        path = f"../pistas/pista{i}.txt"
+            #        p = pista(path)
+            #        start = charPosition (p,"P") [0]
+            #        end = charPosition (p,"F")
+            #        g = geraGrafo(p,c,end)
+            #
+            #        while e!=0:
+            #            pistaMenu(str(i))
+            #            e=pedeInput()
+#
+#                        # depos é implementar as merdas
+#                        #printpista
+#                        if e == 1:
+#                            pp(p,[])
+#                        elif e == 2:
+#                    solve2,w2 = g.procuraBFS(c,end)
+#                            pp(p,solve2)
+#                            print("custo =",w2)
+#                        elif e == 3:
+
+
+            playerNumber()
+            saida = pedeInput()
+            if saida == 0:
+                sair()
+            elif saida == 1: #Singleplayer
+                i = -1
+                while i != 0:
+                    jogarMenu()
+                    i = pedeInput()
+                    if i == 0:
+                        voltarMenuPrincipal()
+                    elif(i == 1 or i == 2 or i == 3 or i == 4):
+                        e = -1
+                        path = f"../pistas/pista{i}.txt"
+                        p = pista(path)
+                        start = charPosition (p,"P") [0]
+                        c = Carro(start)
+                        end = charPosition (p,"F")
+                        g = geraGrafo(p,c,end)
+                        while e!=0:
+                            pistaMenu(str(i))
+                            e=pedeInput()
+
+                            # depos é implementar as merdas
+                            #printpista
+                            if e == 1:
+                                pp(p,[])
+                            elif e == 2:
+                                solve2,w2 = g.procuraBFS(c,end)
+                                pp(p,solve2)
+                                print("custo =",w2)
+                            elif e == 3:
+
+                                solve,w = g.procuraDFS(c,end)
+                                pp(p,solve)
+                                print("custo =",w)
+                            elif e == 4:
+                                solve3,w3 = g.greedy(c,end)
+                                pp(p,solve3)
+                                print("custo =",w3)
+
+                            elif e == 5:
+                                solve4,w4 = g.aEstrela(c,end)
+                                pp(p,solve4)
+                                print("custo =",w4)
+
+                            else:
+                                entradaInvalida()
+                    else:
+                        entradaInvalida()
+            elif saida == 2: #Multiplayer
+                numOfPlayers()
+                in = pedeInput() #in = numero de carros
+                i = -1
+                while i != 0:
+                    jogarMenu()
+                    i = pedeInput()
+                    if i == 0:
+                        voltarMenuPrincipal()
+                    elif(i == 1 or i == 2 or i == 3 or i == 4):
+                        e = -1
+                        path = f"../pistas/pista{i}.txt"
+                        p = pista(path)
+                        start = charPosition (p,"P") [0]
+                        c = Carro(start)
+                        end = charPosition (p,"F")
+                        g = geraGrafo(p,c,end)
+
+>>>>>>> 23fd9c8c43b8374132e53f1a757c46a00714fce5
             else:
                 entradaInvalida()
 
