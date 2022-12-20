@@ -8,19 +8,20 @@ def mainMenu():
     print("│                             1─JOGAR                            │")
     print("│                             0─SAIR                             │")
     print("└────────────────────────────────────────────────────────────────┘")
-
-def playerNumber():
+    
+def playerMode():
+    os.system("clear")
     print("┌────────────────────────────────────────────────────────────────┐")
-    print("│                            MAIN MENU                           │")
+    print("│                            PLAYER MODE                         │")
     print("├────────────────────────────────────────────────────────────────┤")
-    print("│                             1-Singleplayer                     │")
-    print("│                             2-Multiplayer                      │")
-    print("│                             0-Sair                             │")
+    print("│                           1-SINGLEPLAYER                       │")
+    print("│                           2-MULTIPLAYER                        │")
+    print("│                           0-VOLTAR                             │")
     print("└────────────────────────────────────────────────────────────────┘")
 
 # Caso selecione Multiplayer -> "Introduza o número de jogadores"
 
-def jogarMenu():
+def selecionapistasMenu():
     os.system("clear")
     print("┌────────────────────────────────────────────────────────────────┐")
     print("│                             PISTAS                             │")
@@ -32,8 +33,9 @@ def jogarMenu():
     print("│                           0 ─ VOLTAR ATRÁS                     │")
     print("└────────────────────────────────────────────────────────────────┘")
 
+    
 def pistaMenu(numPista):
-    #os.system("clear")
+    os.system("clear")
     print("┌────────────────────────────────────────────────────────────────┐")
     print("│                           PISTA " + numPista + "                              │")
     print("├────────────────────────────────────────────────────────────────┤")
@@ -44,15 +46,13 @@ def pistaMenu(numPista):
     print("│                         5 ─ A*                                 │")
     print("│                         0 ─ VOLTAR ATRÁS                       │")
     print("└────────────────────────────────────────────────────────────────┘")
-
+    
 def entradaInvalida():
     os.system("clear")
     print("┌────────────────────────────────────────────────────────────────┐")
     print("│                        ENTRADA INVÁLIDA                        │")
     print("└────────────────────────────────────────────────────────────────┘")
 
-def pedeInput():
-    return int(input("INTRODUZA A SUA OPÇÃO ──> "))
 
 def sair():
     os.system("clear")
@@ -60,8 +60,38 @@ def sair():
     print("│                             A SAIR...                          │")
     print("└────────────────────────────────────────────────────────────────┘")
 
-def voltarMenuPrincipal():
+def voltarMenu():
     os.system("clear")
     print("┌────────────────────────────────────────────────────────────────┐")
-    print("│                  VOLTANDO AO MENU PRINCIPAL...                 │")
+    print("│                            VOLTANDO...                         │")
     print("└────────────────────────────────────────────────────────────────┘")
+
+def numCarros():
+    os.system("clear")
+    print("┌────────────────────────────────────────────────────────────────┐")
+    print("│                   INSIRA O NÚMERO DE JOGADORES                 │")
+    print("└────────────────────────────────────────────────────────────────┘")
+    
+
+def mudarPartida():
+    os.system("clear")
+    print("┌────────────────────────────────────────────────────────────────┐")
+    print("│                 DESEJA ESCOLHER PONTO DE PARTIDA               │")
+    print("├────────────────────────────────────────────────────────────────┤")
+    print("│                         1 ─ SIM                                │")
+    print("│                         2 ─ NÃO                                │") 
+    print("└────────────────────────────────────────────────────────────────┘")
+    
+         
+def pedeCoord():
+    os.system("clear")
+    print("┌────────────────────────────────────────────────────────────────┐")
+    print("│                     INTRODUZA AS COORDENADAS                   │")
+    print("└────────────────────────────────────────────────────────────────┘")
+    
+    
+def entrada():
+    return int(input("ENTRADA ──> "))
+
+def coords():
+    return input("COORDENADAS ──> ")
