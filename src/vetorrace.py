@@ -54,23 +54,23 @@ def nextestado(pista,carro,end):
     if (posi in end):
         l.append((carro,1))
 
-    for acele in acel():
+    a = acel()
+    for acele in a:
         novoCarro = Carro(posi,veli)
         novoCarro.nextPosicao(acele)
 
         x,y = novoCarro.pos
 
         if not (x < 0 or x > largura or y < 0 or y > altura):
-            #f = temParede(carro,novoCarro)
             f = intersetaParede(pista,carro,novoCarro)
 
-            if f == False: # or (getChar(pista,(x,y)) == 'X'):
+            if f:
+                l.append((novoCarro,1))
+            else:
                 novoCarro.setPos(posi)
                 novoCarro.setVel((0,0))
                 if not ((novoCarro,25) in l):
                     l.append((novoCarro,25))
-            else:
-                l.append((novoCarro,1))
     return l
 
 def getChar(pista, coord):
@@ -123,20 +123,20 @@ def pp(pista,solve):
         time.sleep( delta / len(solve) )
 
 def ppCarros(pista,dicionario,grafo):
-    l = "•⊙⊚⊛⊗"
+    l = "•⊙⊚⊛⊗⊕⊖⊜⌀⌕⌽⍟"
     pista2 = copy.deepcopy(pista)
     dic = copy.deepcopy(dicionario)
     maxi = max([len(dic[k])for k in dic ])
     done = set()
     delta = 4
-    os.system('clear')
+    #os.system('clear')
     for linha in pista2:
         print("".join(linha))
     time.sleep( delta / maxi )
     n  = len(dic)
     while (len(done) != n ):
         time.sleep( delta / maxi )
-        os.system('clear')
+    #    os.system('clear')
         for i in range(n):
             if (len(dic[i]) != 0):
                 x,y = dic[i].pop(0).getPos()
@@ -146,7 +146,7 @@ def ppCarros(pista,dicionario,grafo):
         for linha in pista2:
             print("".join(linha))
     for i in range(n):
-        print("custo", l[i]," = ", grafo.calculaCusto(dicionario[i]))
+        print("custo", l[i]," = ", grafo.calculaCusto(list(set(dicionario[i]))))
 
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
@@ -390,8 +390,13 @@ lista = [c,c2,c3]
 #lista = [c]
 
 #ç = carrosaEstrela(lista,end,g)
+#ç = carrosaEstrela(lista,end,g)
 #ç = carrosgreedy(lista,end,g)
-#ç = carrosBFS(lista,end,g)
-#
-#ppCarros(p,ç,g)
+ç = carrosBFS(lista,end,g)
 
+ppCarros(p,ç,g)
+#solve,w = g.procuraDFS(c,end)
+#print(solve)
+#pp(p,solve)
+#print("custo =",w)
+#

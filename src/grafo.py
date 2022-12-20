@@ -74,8 +74,8 @@ class Grafo:
                         return resultado
 
         path.pop()
-        #return None
-        return ([],0)
+        return None
+        #return ([],0)
     
     def procuraBFS(self, start, end):
         q = Queue()
