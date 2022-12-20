@@ -7,9 +7,22 @@ import ast
 from grafo import Grafo
 from queue import Queue
 from carro import Carro
+import shutil
 
+def mudaPartidas(coordText,path):
+    aux = coordText.split(" ")
+    coordenadas = (int(aux[0])-1,int(aux[1])-1)
+    with open(path, 'r+') as f:
+        # Go to the desired position in the file
+        f.seek((int(aux[0])-1) * len(lines[int(aux[0])-1]) + (int(aux[1])-1))
+        # Write the new text
+        f.write('P')
+    
+       
+       
 #devolve uma lista de listas
 def pista(path:str):
+    shutil.copy(path,"../pistasUser/pistaUser.txt")
     pista = []
     f = open(path, "r")
     conteudo = f.read()
