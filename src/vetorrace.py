@@ -22,7 +22,7 @@ def mudaPartidas(coordText,path):
        
 #devolve uma lista de listas
 def pista(path:str):
-    shutil.copy(path,"../pistasUser/pistaUser.txt")
+    #shutil.copy(path,"../pistasUser/pistaUser.txt")
     pista = []
     f = open(path, "r")
     conteudo = f.read()
@@ -142,14 +142,14 @@ def ppCarros(pista,dicionario,grafo):
     maxi = max([len(dic[k])for k in dic ])
     done = set()
     delta = 4
-    #os.system('clear')
+    os.system('clear')
     for linha in pista2:
         print("".join(linha))
     time.sleep( delta / maxi )
     n  = len(dic)
     while (len(done) != n ):
         time.sleep( delta / maxi )
-    #    os.system('clear')
+        os.system('clear')
         for i in range(n):
             if (len(dic[i]) != 0):
                 x,y = dic[i].pop(0).getPos()
@@ -372,20 +372,20 @@ def teste():
     insertInitPos(p, n)
     print(p)
 
-np = 3
+np    = 5
 path  = f"../pistas/pista{np}.txt"
 p     = pista(path)
 start = charPosition(p,"P")
 end   = charPosition(p,"F")
 c     = Carro(start[0])
-c2    = Carro((1,1))
-c3    = Carro((4,1))
+c2    = Carro((4,4))
+c3    = Carro((4,5))
 c4    = Carro((2,2))
 c5    = Carro((3,3))
-#c2    = Carro((10,1))
-#c3    = Carro((18,1))
-#c2    = Carro((36,43))
-#c3    = Carro((34,34))
+#c2   = Carro((10,1))
+#c3   = Carro((18,1))
+#c2   = Carro((36,43))
+#c3   = Carro((34,34))
 
 pathFile = f"grafo{np}.pkl"
 if os.path.exists(pathFile):
@@ -403,9 +403,9 @@ lista = [c,c2,c3]
 #lista = [c]
 
 #ç = carrosaEstrela(lista,end,g)
-#ç = carrosaEstrela(lista,end,g)
+ç = carrosaEstrela(lista,end,g)
 #ç = carrosgreedy(lista,end,g)
-ç = carrosBFS(lista,end,g)
+#ç = carrosBFS(lista,end,g)
 
 ppCarros(p,ç,g)
 #solve,w = g.procuraDFS(c,end)
