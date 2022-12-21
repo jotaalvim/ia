@@ -9,15 +9,23 @@ from queue import Queue
 from carro import Carro
 import shutil
 
+"""
 def mudaPartidas(coordText,path):
-    aux = coordText.split(" ")
-    coordenadas = (int(aux[0])-1,int(aux[1])-1)
-    with open(path, 'r+') as f:
-        # Go to the desired position in the file
-        f.seek((int(aux[0])-1) * len(lines[int(aux[0])-1]) + (int(aux[1])-1))
-        # Write the new text
-        f.write('P')
-    
+    aux = coordText.split(' ')
+    coords = (int(aux[0])-1,int(aux[1])-1)
+    # Open the file in read mode
+    with open(path, 'r') as f:
+    # Read the contents of the file into a list of lines
+        lines = f.readlines()
+
+# Modify the desired line
+    lines[coords[0]] = lines[coords[0]][:coords[1]] + 'P' + lines[coords[0]][coords[1]:]
+
+# Open the file in write mode
+    with open('file.txt', 'w') as f:
+    # Write the modified contents back to the file
+        f.writelines(lines)
+""" 
        
        
 #devolve uma lista de listas

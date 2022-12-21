@@ -2,189 +2,114 @@ from interface import *
 from vetorrace import *
 
 def main():
-    saida = -1
-
-    while saida != 0:
-    #menu inicial
+    
+    flag1=True
+    
+    while flag1:
+        
         mainMenu()
-        saida = pedeInput()
-    #sai do jogo
-        if saida == 0:
+        mainMenuVar = entrada()
+        
+        if mainMenuVar == 0:
             sair()
-    #jogar
-        elif saida == 1:
-<<<<<<< HEAD
-            i = -1
-            while i != 0:
-    #menu numjogadores
-                playerNumber()
-                numjogadores = pedeInput()
-                while numjogadores != 0:
-    #single player
-                    if numjogadores == 1:
-                        PistasMenu()
-                        i = pedeInput()
-    #volta ao menu do num de jogadaores                    
-                        if i == 0:
+            flag1 = False
+        
+        elif mainMenuVar == 1:
+            flag2=True
+            
+            while flag2:
+                playerMode()
+                playerModeVar = entrada() 
+            
+                if playerModeVar == 0:
+                    voltarMenu()
+                    flag2=False
+            
+                elif playerModeVar == 1:                       #single player
+                    selecionapistasMenu()
+                    npista = entrada() 
+                    flag3=True
+                    
+                    while flag3:
+                        if npista == 0:
                             voltarMenu()
-    #escolhe a pista
-                        elif(i == 1 or i == 2 or i == 3 or i == 4): 
-                            e = -1
-                            path = f"../pistas/pista{i}.txt"
-                            p = pista(path)
+                            flag3=False
+                        
+                        elif(npista == 1 or npista == 2 or npista == 3 or npista == 4):    
+                            
+                            path  = f"../pistas/pista{npista}.txt"
+                            p=pista(path)
                             start = charPosition (p,"P") [0]
                             c = Carro(start)
                             end = charPosition (p,"F")
                             g = geraGrafo(p,c,end)
-    
-                            while e!=0:
-    #menu da pista, escolher a opção                            
-                                pistaMenu(str(i))
-                                e=pedeInput()
-                        
-                        # depos é implementar as merdas
-                        #printpista
-                                if e == 1:
-                                    pp(p,[])
-                                elif e == 2:
+                            
+                            flag5 = True
+                            while flag5:
+                                pistaMenu(str(npista))
+                                pistaMenuVar = entrada() 
+                                
+                                if pistaMenuVar == 0:
+                                    voltarMenu()
+                                    flag5=False
+                                elif pistaMenuVar == 1:
+                                     pp(p,[])
+                                elif pistaMenuVar == 2:
                                     solve2,w2 = g.procuraBFS(c,end)
                                     pp(p,solve2)
                                     print("custo =",w2)
-                                #elif e == 3:         
-    #MULTIPLAYER                     
-                    elif numjogadores == 2:
-                        numCarros()
-                        ncarros=pedeInput()
-                        PistasMenu()
-                        i = pedeInput()
-    #volta ao menu do num de jogadaores                    
-                        if i == 0:
+                                #fixme - falta para as outras operações                                
+                                else:
+                                    entradaInvalida()
+                        else:
+                            entradaInvalida()
+                            
+                elif playerModeVar == 2:                       #multi player
+                    numCarros()
+                    numCarrosVar = entrada()
+                    selecionapistasMenu()
+                    npista = entrada() 
+                    flag6= True
+                    while flag6:
+                        if npista == 0:
                             voltarMenu()
-    #escolhe a pista
-                        elif(i == 1 or i == 2 or i == 3 or i == 4): 
-                            e = -1
-                            path = f"../pistas/pista{i}.txt"
-                            p = pista(path)
-                            start = charPosition (p,"P") [0]
+                            flag6=False
+                        
+                        elif(npista == 1 or npista == 2 or npista == 3 or npista == 4):    
+                            
+                            path  = f"../pistas/pista{npista}.txt"    
+                            #for i in range(numCarrosVar):
+                            p=pista(path)
+                            start = charPosition (p,"P") 
                             c = Carro(start)
                             end = charPosition (p,"F")
                             g = geraGrafo(p,c,end)
-    
-                            while e!=0:
-    #menu da pista, escolher a opção                            
-                                pistaMenu(str(i))
-                                e=pedeInput()
-                        
-                        # depos é implementar as merdas
-                        #printpista
-                                if e == 1:
-                                    pp(p,[])
-                                elif e == 2:
+                            
+                            flag8=True
+                            while flag8:
+                                pistaMenu(str(npista))
+                                pistaMenuVar = entrada() 
+                                
+                                if pistaMenuVar == 0:
+                                    voltarMenu()
+                                    flag8=False
+                                elif pistaMenuVar == 1:
+                                     pp(p,[])
+                                elif pistaMenu == 2:
                                     solve2,w2 = g.procuraBFS(c,end)
                                     pp(p,solve2)
                                     print("custo =",w2)
-                                #elif e == 3: )
-=======
-            #i = -1
-            #while i != 0:
-            #    jogarMenu()
-            #    i = pedeInput()
-            #    if i == 0:
-            #        voltarMenuPrincipal()
-            #    elif(i == 1 or i == 2 or i == 3 or i == 4):
-            #        e = -1
-            #        path = f"../pistas/pista{i}.txt"
-            #        p = pista(path)
-            #        start = charPosition (p,"P") [0]
-            #        end = charPosition (p,"F")
-            #        g = geraGrafo(p,c,end)
-            #
-            #        while e!=0:
-            #            pistaMenu(str(i))
-            #            e=pedeInput()
-#
-#                        # depos é implementar as merdas
-#                        #printpista
-#                        if e == 1:
-#                            pp(p,[])
-#                        elif e == 2:
-#                    solve2,w2 = g.procuraBFS(c,end)
-#                            pp(p,solve2)
-#                            print("custo =",w2)
-#                        elif e == 3:
-
-
-            playerNumber()
-            saida = pedeInput()
-            if saida == 0:
-                sair()
-            elif saida == 1: #Singleplayer
-                i = -1
-                while i != 0:
-                    jogarMenu()
-                    i = pedeInput()
-                    if i == 0:
-                        voltarMenuPrincipal()
-                    elif(i == 1 or i == 2 or i == 3 or i == 4):
-                        e = -1
-                        path = f"../pistas/pista{i}.txt"
-                        p = pista(path)
-                        start = charPosition (p,"P") [0]
-                        c = Carro(start)
-                        end = charPosition (p,"F")
-                        g = geraGrafo(p,c,end)
-                        while e!=0:
-                            pistaMenu(str(i))
-                            e=pedeInput()
-
-                            # depos é implementar as merdas
-                            #printpista
-                            if e == 1:
-                                pp(p,[])
-                            elif e == 2:
-                                solve2,w2 = g.procuraBFS(c,end)
-                                pp(p,solve2)
-                                print("custo =",w2)
-                            elif e == 3:
-
-                                solve,w = g.procuraDFS(c,end)
-                                pp(p,solve)
-                                print("custo =",w)
-                            elif e == 4:
-                                solve3,w3 = g.greedy(c,end)
-                                pp(p,solve3)
-                                print("custo =",w3)
-
-                            elif e == 5:
-                                solve4,w4 = g.aEstrela(c,end)
-                                pp(p,solve4)
-                                print("custo =",w4)
-
-                            else:
-                                entradaInvalida()
-                    else:
-                        entradaInvalida()
-            elif saida == 2: #Multiplayer
-                numOfPlayers()
-                in = pedeInput() #in = numero de carros
-                i = -1
-                while i != 0:
-                    jogarMenu()
-                    i = pedeInput()
-                    if i == 0:
-                        voltarMenuPrincipal()
-                    elif(i == 1 or i == 2 or i == 3 or i == 4):
-                        e = -1
-                        path = f"../pistas/pista{i}.txt"
-                        p = pista(path)
-                        start = charPosition (p,"P") [0]
-                        c = Carro(start)
-                        end = charPosition (p,"F")
-                        g = geraGrafo(p,c,end)
-
->>>>>>> 23fd9c8c43b8374132e53f1a757c46a00714fce5
-            else:
-                entradaInvalida()
-
+                                #fixme - falta para as outras operações                                
+                                else:
+                                    entradaInvalida()
+                        else:
+                            entradaInvalida()
+                    
+                else:
+                    entradaInvalida()
+                
+        else:
+            entradaInvalida()
+    
 if __name__ == "__main__":
     main()
