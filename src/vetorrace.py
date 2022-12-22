@@ -9,28 +9,7 @@ from queue import Queue
 from carro import Carro
 import shutil
 
-"""
-def mudaPartidas(coordText,path):
-    aux = coordText.split(' ')
-    coords = (int(aux[0])-1,int(aux[1])-1)
-    # Open the file in read mode
-    with open(path, 'r') as f:
-    # Read the contents of the file into a list of lines
-        lines = f.readlines()
-
-# Modify the desired line
-    lines[coords[0]] = lines[coords[0]][:coords[1]] + 'P' + lines[coords[0]][coords[1]:]
-
-# Open the file in write mode
-    with open('file.txt', 'w') as f:
-    # Write the modified contents back to the file
-        f.writelines(lines)
-""" 
-       
-       
-#devolve uma lista de listas
 def pista(path:str):
-    #shutil.copy(path,"../pistasUser/pistaUser.txt")
     pista = []
     f = open(path, "r")
     conteudo = f.read()
@@ -127,16 +106,22 @@ def endcarro(end):
         l.append(novoCarro)
     return l
 
+def printp(pista):
+    pista2 = copy.deepcopy(pista)
+    for linha in pista2:
+        print("".join(linha))
+    x = input()
+
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
     # Δ tempo
     delta = 2
-    os.system('clear')
+    #os.system('clear')
     for linha in pista2:
         print("".join(linha))
     time.sleep( delta / len(solve) )
     for carros in solve:
-        os.system('clear')
+        #os.system('clear')
         x,y = carros.getPos()
         pista2[y][x] = '•'
         for linha in pista2:
@@ -168,6 +153,7 @@ def ppCarros(pista,dicionario,grafo):
             print("".join(linha))
     for i in range(n):
         print("custo", l[i]," = ", grafo.calculaCusto(list(set(dicionario[i]))))
+    x = input()
 
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
@@ -252,6 +238,9 @@ def carrosBFS(listaCarros, end, grafo):
     
             usadas = [dic[car][-1].getPos() for car in range(key)]
     
+            #if (solve == []):
+            #    done.add(key)
+
             if (len(solve) == 1):
                 done.add(key)
                 dic[key].append(solve[0])
@@ -309,8 +298,6 @@ def carrosgreedy(listaCarros, end, grafo):
                 dic[key].append(ncarro)
     return dic
 
-
-
 def carrosaEstrela(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
@@ -350,74 +337,48 @@ def carrosaEstrela(listaCarros, end, grafo):
                 dic[key].append(ncarro)
     return dic
 
-def pedePos():
-    inputUtilizador = input('Insere as coordenadas onde queres que começe o carro: ')
+def fazCarros(l):
+    q = []
+    for pos in l:
+        q.append(Carro(pos))
+    return q
 
-    tokens = inputUtilizador.split(",")
-    for token in tokens:
-        token = token.strip()
-
-    # print(f"Tokens: {tokens}")
-    return tuple(map(int, tokens))
-
-def insertInitPos (pista, n):
-    number_of_cars = n
-    while number_of_cars != 0:
-        posDesejada = pedePos()
-        # pos1 = getCharPosition(pista, posDesejada)
-        # x = getChar(pista, posDesejada)
-        # x = x.replace(char, "P")
-        pista[posDesejada[1]][posDesejada[0]] = "P"
-        number_of_cars -= 1
-    return pista
-
-
-def teste():
-    path = f"../pistas/pista2.txt"
-    p = pista(path)
-    print(p)
-    n = 2
-    insertInitPos(p, n)
-    print(p)
-
-np    = 5
-path  = f"../pistas/pista{np}.txt"
-p     = pista(path)
-start = charPosition(p,"P")
-end   = charPosition(p,"F")
-c     = Carro(start[0])
-c2    = Carro((4,4))
-c3    = Carro((4,5))
-c4    = Carro((2,2))
-c5    = Carro((3,3))
+#np    = 5
+#path  = f"../pistas/pista{np}.txt"
+#p     = pista(path)
+#start = charPosition(p,"P")
+#end   = charPosition(p,"F")
+#c     = Carro(start[0])
+#c2    = Carro((4,4))
+#c3    = Carro((4,5))
+#c4    = Carro((2,2))
+#c5    = Carro((3,3))
 #c2   = Carro((10,1))
 #c3   = Carro((18,1))
 #c2   = Carro((36,43))
 #c3   = Carro((34,34))
 
-pathFile = f"grafo{np}.pkl"
-if os.path.exists(pathFile):
-    with open(pathFile, "rb") as file:
-        print("loading data from "+pathFile)
-        g = pickle.load(file)
-        print("done")
-else:
-    g = geraGrafo(p,c,end)
-    with open(pathFile, "wb") as f:
-        print("dumping data to "+pathFile)
-        pickle.dump(g, f)
-        print("done")
-lista = [c,c2,c3]
+#pathFile = f"../pickle/grafo{np}.pkl"
+#if os.path.exists(pathFile):
+#    with open(pathFile, "rb") as file: #        print("loading data from "+pathFile)
+#        g = pickle.load(file)
+#        print("done")
+#else:
+#    g = geraGrafo(p,c,end)
+#    with open(pathFile, "wb") as f:
+#        print("dumping data to "+pathFile)
+#        pickle.dump(g, f)
+#        print("done")
+#lista = [c,c2,c3]
 #lista = [c]
 
 #ç = carrosaEstrela(lista,end,g)
-ç = carrosaEstrela(lista,end,g)
+#ç = carrosaEstrela(lista,end,g)
 #ç = carrosgreedy(lista,end,g)
 #ç = carrosBFS(lista,end,g)
 
-ppCarros(p,ç,g)
+#ppCarros(p,ç,g)
 #solve,w = g.procuraDFS(c,end)
 #print(solve)
 #pp(p,solve)
 #print("custo =",w)
-#
