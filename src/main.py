@@ -62,9 +62,10 @@ def main():
                             ppCarros(p,solve,g)
 
                         elif pistaMenuVar == 3:
-                            a = 4
-                            #FIXME
-                            #solve = carrosaDPS(start,end,g)
+                            solve,w = g.procuraDFS(start[0],end)
+                            pp(p,solve)
+                            print("custo • =",w)
+                            x = input()
                         elif pistaMenuVar == 4:
                             solve = carrosgreedy(start,end,g)
                             ppCarros(p,solve,g)

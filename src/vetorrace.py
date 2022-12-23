@@ -115,13 +115,13 @@ def printp(pista):
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
     # Δ tempo
-    delta = 2
-    #os.system('clear')
+    delta = 4
+    os.system('clear')
     for linha in pista2:
         print("".join(linha))
     time.sleep( delta / len(solve) )
     for carros in solve:
-        #os.system('clear')
+        os.system('clear')
         x,y = carros.getPos()
         pista2[y][x] = '•'
         for linha in pista2:
@@ -256,6 +256,59 @@ def carrosBFS(listaCarros, end, grafo):
                     ncarro.setVel((0,0))
                 dic[key].append(ncarro)
     return dic
+
+
+
+
+
+def carrosDFS(listaCarros, end, grafo):
+    #lista de posiçoes usadas
+    usadas = []
+    done = set()
+    #nº carros
+    dic = {}
+    n = 0
+    #inicializar
+    for c in listaCarros:
+        solve,w = grafo.procuraDFS3(c,end)
+        #aux.append((solve,w))
+        dic[n] = [solve[0]]
+        n += 1
+    n = len(listaCarros)
+    
+    while len(done) != n:
+        for key in range(n):
+            # ultimo carro da solução
+            last = dic[key][-1]
+            solve,w = grafo.procuraDFS3(last, end)
+    
+            usadas = [dic[car][-1].getPos() for car in range(key)]
+    
+            #if (solve == []):
+            #    done.add(key)
+
+            if (len(solve) == 1):
+                done.add(key)
+                dic[key].append(solve[0])
+            elif (solve[1].getPos() in end ): #cheguei ao fim
+                done.add(key)
+                dic[key].append(solve[1])
+            else:
+                ncarro = copy.deepcopy(solve[1])
+                pos = ncarro.getPos()
+     
+                if (pos in usadas):
+                    ncarro.setPos( solve[0].getPos() )
+                    ncarro.setVel((0,0))
+                dic[key].append(ncarro)
+    return dic
+
+
+
+
+
+
+
 
 
 

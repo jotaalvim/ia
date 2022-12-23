@@ -60,7 +60,6 @@ class Grafo:
     def procuraDFS(self,start,end,path=[],visited=set()):
         path.append(start)
         visited.add(start)
-
         if start.getPos() in end:
             custoT = self.calculaCusto(path)
             return (path,custoT)
@@ -74,6 +73,7 @@ class Grafo:
         path.pop()
         return None
         #return ([],0)
+
     
     def procuraBFS(self, start, end):
         q = Queue()
