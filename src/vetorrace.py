@@ -9,6 +9,7 @@ from queue import Queue
 from carro import Carro
 import shutil
 
+#devolve uma matriz de carateres
 def pista(path:str):
     pista = []
     f = open(path, "r")
@@ -77,6 +78,7 @@ def getChar(pista, coord):
     x,y = coord
     return pista[y][x]
 
+#cria um garfo de uma pista
 def geraGrafo(pista,carro,end):
     # grafo é direcionado
     g = Grafo(True)
@@ -98,7 +100,7 @@ def geraGrafo(pista,carro,end):
 
     return g
 
-
+#posições carros nas posições finais 
 def endcarro(end):
     l = []
     for pos in end:
@@ -112,6 +114,7 @@ def printp(pista):
         print("".join(linha))
     x = input()
 
+#pretty print
 def pp(pista,solve):
     pista2 = copy.deepcopy(pista)
     # Δ tempo
@@ -128,6 +131,7 @@ def pp(pista,solve):
             print("".join(linha))
         time.sleep( delta / len(solve) )
 
+#pretty print para vários carros ao mesmo tempo
 def ppCarros(pista,dicionario,grafo):
     l = "•⊙⊚⊛⊗⊕⊖⊜⌀⌕⌽⍟"
     pista2 = copy.deepcopy(pista)
@@ -155,6 +159,7 @@ def ppCarros(pista,dicionario,grafo):
         print("custo", l[i]," = ", grafo.calculaCusto(list(set(dicionario[i]))))
     x = input()
 
+# posso passar?
 def intersetaParede(pista,c1,c2):
     c1x,c1y = c1.getPos()
     c2x,c2y = c2.getPos()
@@ -182,7 +187,6 @@ def intersetaParede(pista,c1,c2):
     ti.extend([(xx,fy) for xx in range(ix,fx)])
     ti.extend([(fx,yy) for yy in range(iy,fy)])
 
-
     f  = False
     f2 = False
 
@@ -195,7 +199,6 @@ def intersetaParede(pista,c1,c2):
         if (pista[y][x] == 'X'):
             f2 = True
             break
-
     # posso passar?
     return (not f) or (not f2)
 
@@ -215,6 +218,7 @@ def melhorDistance (carro, end):
             m = k
     return m
 
+#função que calcula bfs para vários carros ao mesmo tempo
 def carrosBFS(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
@@ -261,6 +265,7 @@ def carrosBFS(listaCarros, end, grafo):
 
 
 
+#função que calcula dfs para vários carros ao mesmo tempo
 def carrosDFS(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
@@ -312,6 +317,7 @@ def carrosDFS(listaCarros, end, grafo):
 
 
 
+#função que calcula greedy para vários carros ao mesmo tempo
 def carrosgreedy(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
@@ -351,6 +357,7 @@ def carrosgreedy(listaCarros, end, grafo):
                 dic[key].append(ncarro)
     return dic
 
+#função que calcula A* para vários carros ao mesmo tempo
 def carrosaEstrela(listaCarros, end, grafo):
     #lista de posiçoes usadas
     usadas = []
